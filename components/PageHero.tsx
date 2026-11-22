@@ -1,14 +1,11 @@
-type Props = { eyebrow: string; title: string; children?: React.ReactNode };
+type Props = { title: React.ReactNode; children?: React.ReactNode };
 
-/** Banner at the top of each inner page. */
-export default function PageHero({ eyebrow, title, children }: Props) {
+/** Title block at the top of each inner page. */
+export default function PageHero({ title, children }: Props) {
   return (
-    <section className="page-hero">
-      <div className="container">
-        <p className="eyebrow">{eyebrow}</p>
-        <h1 className="display">{title}</h1>
-        {children && <div className="page-hero__lede">{children}</div>}
-      </div>
-    </section>
+    <header className="page-header container">
+      <h1>{title}</h1>
+      {children && <div className="lede muted">{children}</div>}
+    </header>
   );
 }

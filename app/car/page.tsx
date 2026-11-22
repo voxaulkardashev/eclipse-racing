@@ -1,104 +1,83 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import { ImageBox, Lines, Ph } from "@/components/Placeholder";
+import { ImageBox, Ph } from "@/components/Placeholder";
+import Section from "@/components/Section";
 
-export const metadata: Metadata = { title: "The Car" };
+export const metadata: Metadata = { title: "Car" };
 
 const specs = [
-  "Total mass",
-  "Overall length",
-  "Overall width",
-  "Wheel diameter",
-  "Body material",
-  "Wheel material",
-  "Best track time",
-  "Drag coefficient (CFD)",
+  ["Mass", "[g]"],
+  ["Length", "[mm]"],
+  ["Width", "[mm]"],
+  ["Wheel diameter", "[mm]"],
+  ["Body material", "[material]"],
+  ["Wheel material", "[material]"],
+  ["Drag coefficient (CFD)", "[Cd]"],
+  ["Best track time", "[s]"],
 ];
 
 const process = [
-  { title: "Research & concept", label: "Initial research and sketches" },
-  { title: "CAD design", label: "CAD software and iterations" },
-  { title: "CFD & wind tunnel", label: "Aerodynamic analysis and results" },
-  { title: "Manufacture", label: "Machining, 3D printing and finishing" },
-  { title: "Testing & refinement", label: "Track testing and changes made" },
+  ["Research and concept", "[Early research and sketches.]"],
+  ["CAD", "[Software used and how many iterations.]"],
+  ["CFD and wind tunnel", "[What you tested and what changed.]"],
+  ["Manufacture", "[Machining, printing, finishing.]"],
+  ["Testing", "[Track runs and refinements.]"],
 ];
 
 export default function CarPage() {
   return (
     <>
-      <PageHero eyebrow="The car" title="[Car name]">
-        <Ph>One-line description of the car and its design philosophy.</Ph>
+      <PageHero title={<Ph>[Car name]</Ph>}>
+        <Ph>[One sentence on the car and its design idea.]</Ph>
       </PageHero>
 
-      <section className="section">
-        <div className="container">
-          <ImageBox label="Hero car render (21:9)" ratio="21 / 9" />
-        </div>
-      </section>
+      <div className="container">
+        <ImageBox label="Car render" ratio="21 / 9" />
+      </div>
 
-      <section className="section section--raised">
-        <div className="container split">
-          <div>
-            <p className="eyebrow">Specifications</p>
-            <h2 className="h2">By the numbers</h2>
-            <table className="specs">
-              <tbody>
-                {specs.map((s) => (
-                  <tr key={s}>
-                    <th scope="row">{s}</th>
-                    <td>
-                      <Ph>—</Ph>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="grid grid--2">
-            <ImageBox label="Side view" ratio="1 / 1" />
-            <ImageBox label="Top view" ratio="1 / 1" />
-            <ImageBox label="Front view" ratio="1 / 1" />
-            <ImageBox label="Detail" ratio="1 / 1" />
-          </div>
-        </div>
-      </section>
+      <Section title="Specification">
+        <table className="table">
+          <tbody>
+            {specs.map(([name, unit]) => (
+              <tr key={name}>
+                <th scope="row">{name}</th>
+                <td className="mono">
+                  <Ph>{unit}</Ph>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Section>
 
-      <section className="section">
-        <div className="container split">
-          <div>
-            <p className="eyebrow">Design process</p>
-            <h2 className="h2">From sketch to start line</h2>
-            <ol className="timeline">
-              {process.map((p) => (
-                <li key={p.title}>
-                  <h3>{p.title}</h3>
-                  <Lines count={2} label={p.label} />
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="grid" style={{ alignSelf: "start" }}>
-            <ImageBox label="CFD visualisation" ratio="16 / 10" />
+      <Section title="Process">
+        <div className="cols cols--2">
+          <ol className="steps">
+            {process.map(([name, note]) => (
+              <li key={name}>
+                <div>
+                  <h3 style={{ fontSize: "1rem" }}>{name}</h3>
+                  <p className="muted" style={{ marginTop: 4 }}>
+                    <Ph>{note}</Ph>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <div className="stack">
+            <ImageBox label="CFD result" ratio="16 / 10" />
             <ImageBox label="Manufacturing photo" ratio="16 / 10" />
           </div>
         </div>
-      </section>
+      </Section>
 
-      <section className="section section--raised">
-        <div className="container">
-          <div className="section__head">
-            <div>
-              <p className="eyebrow">Gallery</p>
-              <h2 className="h2">Up close</h2>
-            </div>
-          </div>
-          <div className="grid grid--3">
-            {Array.from({ length: 6 }, (_, i) => (
-              <ImageBox key={i} label={`Gallery image ${i + 1}`} ratio="4 / 3" />
-            ))}
-          </div>
+      <Section title="Photos">
+        <div className="cols cols--3">
+          {Array.from({ length: 6 }, (_, i) => (
+            <ImageBox key={i} label={`Photo ${i + 1}`} ratio="4 / 3" />
+          ))}
         </div>
-      </section>
+      </Section>
     </>
   );
 }
