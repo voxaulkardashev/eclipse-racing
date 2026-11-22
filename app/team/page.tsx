@@ -1,64 +1,58 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import { ImageBox, Lines, Ph } from "@/components/Placeholder";
+import { ImageBox, Ph } from "@/components/Placeholder";
+import Section from "@/components/Section";
 import { team } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Team" };
 
+const supporters = ["Teacher", "Industry mentor", "School", "Partner"];
+
 export default function TeamPage() {
   return (
     <>
-      <PageHero eyebrow="The team" title="Meet the crew">
-        <Ph>Introduction: where the team is from, how you formed and what drives you.</Ph>
+      <PageHero title="Team">
+        <Ph>[Introduction: where the team is from and how you formed.]</Ph>
       </PageHero>
 
-      <section className="section">
-        <div className="container grid grid--3">
+      <Section title="Members">
+        <div className="people">
           {team.map((m) => (
-            <article className="card member" key={m.role}>
+            <article key={m.role}>
               <ImageBox label="Portrait" ratio="4 / 5" />
-              <div className="card__body">
-                <p className="card__meta">{m.role}</p>
-                <h2 className="card__title">
-                  <Ph>[First name]</Ph>
-                </h2>
-                <Lines count={3} label="Short bio" />
-              </div>
+              <h3 className="person__name">
+                <Ph>[Name]</Ph>
+              </h3>
+              <p className="person__role">{m.role}</p>
+              <p className="muted" style={{ marginTop: 8, fontSize: "0.9375rem" }}>
+                <Ph>[Short bio, one or two sentences.]</Ph>
+              </p>
             </article>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section className="section section--raised">
-        <div className="container split">
-          <ImageBox label="Team at work (workshop photo)" ratio="4 / 3" />
-          <div>
-            <p className="eyebrow">How we work</p>
-            <h2 className="h2">One team, one goal</h2>
-            <Lines count={4} label="Team values and way of working" />
-            <Lines count={3} />
+      <Section title="How we work">
+        <div className="cols cols--2">
+          <div className="prose">
+            <p>
+              <Ph>[How the team splits work, meets and makes decisions.]</Ph>
+            </p>
           </div>
+          <ImageBox label="Workshop photo" ratio="4 / 3" />
         </div>
-      </section>
+      </Section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section__head">
-            <div>
-              <p className="eyebrow">Support network</p>
-              <h2 className="h2">Mentors &amp; supporters</h2>
-            </div>
-          </div>
-          <div className="grid grid--4">
-            {["Teacher / mentor", "Industry mentor", "School", "Partner"].map((label) => (
-              <div className="feature" key={label}>
-                <p className="card__meta">{label}</p>
-                <Ph>[Name]</Ph>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section title="Support">
+        <ul className="rows">
+          {supporters.map((s) => (
+            <li key={s}>
+              <span className="rows__key">{s}</span>
+              <Ph>[Name]</Ph>
+            </li>
+          ))}
+        </ul>
+      </Section>
     </>
   );
 }

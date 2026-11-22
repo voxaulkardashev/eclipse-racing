@@ -2,9 +2,8 @@
 
 export const site = {
   name: "Eclipse Racing",
-  tagline: "[Team tagline: one short line]",
-  competition: "STEM Racing · Professional Class",
-  season: "[Season, e.g. 2026–27]",
+  competition: "STEM Racing, Professional Class",
+  season: "[Season, e.g. 2026/27]",
   domain: "eclipseracing.co.uk",
   email: "[team email]@eclipseracing.co.uk",
   socials: [
@@ -18,7 +17,7 @@ export const site = {
 export const nav = [
   { href: "/", label: "Home" },
   { href: "/team/", label: "Team" },
-  { href: "/car/", label: "The Car" },
+  { href: "/car/", label: "Car" },
   { href: "/sponsors/", label: "Sponsors" },
   { href: "/news/", label: "News" },
   { href: "/contact/", label: "Contact" },
@@ -34,9 +33,17 @@ export const team = [
   { role: "Resources Manager" },
 ];
 
+// Sponsor logo slots on the Sponsors page, largest tier first.
 export const sponsorTiers = [
-  { name: "Title Partner", slots: 1, size: "xl" },
-  { name: "Gold", slots: 2, size: "lg" },
-  { name: "Silver", slots: 3, size: "md" },
-  { name: "Supporters", slots: 6, size: "sm" },
+  { name: "Title partner", slots: 1 },
+  { name: "Gold", slots: 2 },
+  { name: "Silver", slots: 3 },
+  { name: "Supporters", slots: 6 },
 ] as const;
+
+// Placeholder news posts until real ones exist.
+export const posts = [1, 2, 3, 4, 5, 6].map((n) => ({
+  date: "[DD.MM.YYYY]",
+  title: `[Post title ${n}]`,
+  summary: "[One-sentence summary of the post]",
+}));
