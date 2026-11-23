@@ -6,7 +6,8 @@ import { useEffect, useRef } from "react";
  * A yellow ink-dot cursor that trails the pointer with easing.
  * Over links it opens into a highlighter disc (multiply blend, so the text under it stays legible);
  * over elements with data-cursor="Label" it becomes an ink disc showing that label.
- * Only on fine pointers with motion allowed; touch and reduced-motion users keep the system cursor.
+ * Shown whenever a mouse or trackpad is present (including touchscreen laptops, whose primary
+ * pointer reports as touch). With reduced motion it follows the pointer instantly instead of trailing.
  */
 export default function Cursor() {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,9 +18,10 @@ export default function Cursor() {
     const label = labelRef.current;
     if (!el || !label) return;
 
-    const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
+    // any-*: a touchscreen laptop's primary pointer is touch, but its mouse still counts.
+    const fine = window.matchMedia("(any-hover: hover) and (any-pointer: fine)");
+    if (!fine.matches) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!fine.matches || reduced.matches) return;
 
     document.documentElement.classList.add("has-cursor");
 
@@ -29,9 +31,10 @@ export default function Cursor() {
     let visible = false;
 
     const tick = () => {
-      // Ease towards the pointer; a higher factor feels tighter.
-      pos.x += (target.x - pos.x) * 0.2;
-      pos.y += (target.y - pos.y) * 0.2;
+      // Ease towards the pointer (a higher factor feels tighter); no trailing with reduced motion.
+      const ease = reduced.matches ? 1 : 0.2;
+      pos.x += (target.x - pos.x) * ease;
+      pos.y += (target.y - pos.y) * ease;
       el.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
       if (Math.abs(target.x - pos.x) > 0.1 || Math.abs(target.y - pos.y) > 0.1) {
         raf = requestAnimationFrame(tick);

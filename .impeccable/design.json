@@ -181,7 +181,7 @@
       {
         "name": "cursor-follow",
         "value": "lerp 0.2 per frame",
-        "purpose": "Ink-dot cursor easing."
+        "purpose": "Ink-dot cursor easing; 1 (instant) under reduced motion."
       }
     ],
     "breakpoints": [
