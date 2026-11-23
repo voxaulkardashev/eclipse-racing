@@ -382,6 +382,18 @@ a:hover {
   line-height: 0.82;
 }
 
+/* Each title line is a mask, so the words can rise into place on the intro */
+.cover__line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.06em;
+  margin-block: -0.06em;
+}
+
+.cover__line > span {
+  display: block;
+}
+
 .cover__sub {
   margin-top: 20px;
   font-size: clamp(1.125rem, 1.6vw, 1.375rem);
@@ -1263,6 +1275,92 @@ main > :last-child.band {
 
 .cursor.is-dark.is-label .cursor__label {
   color: var(--ink);
+}
+
+/* First-visit loading screen: the logo is drawn, then the sheet wipes up */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+  grid-template-rows: 1fr auto;
+  background: var(--cover);
+  color: var(--cover-text);
+}
+
+.intro .loader {
+  display: grid;
+}
+
+.intro body {
+  overflow: hidden;
+}
+
+.loader__stage {
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+}
+
+.loader__mark {
+  width: min(62vw, 440px);
+  height: auto;
+  overflow: visible;
+  opacity: 0;
+}
+
+.loader__fill {
+  opacity: 0;
+}
+
+.loader__fill--star {
+  fill: var(--spot);
+}
+
+.loader__fill--car {
+  fill: #ffffff;
+}
+
+.loader__stroke {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.loader__stroke--star {
+  stroke: var(--spot);
+}
+
+.loader__stroke--car {
+  stroke: #ffffff;
+}
+
+.loader__foot {
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.loader__rule {
+  display: block;
+  height: 2px;
+  background: var(--spot);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.loader__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  font-stretch: 75%;
+  font-weight: 600;
+  color: var(--cover-2);
+}
+
+.loader__meta > * {
+  opacity: 0;
 }
 
 /* Page-turn sheet */

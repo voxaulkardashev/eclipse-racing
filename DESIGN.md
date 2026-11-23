@@ -200,6 +200,7 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Focus:** the field fills with 35% spot yellow, like a highlighter.
 
 ### Motion
+- **Loading screen:** on the first page of a browser session, a black sheet where anime.js draws the logo (the yellow outline grows from its middle, the white car traces in, then the fills flood in), a yellow rule runs along the foot, and GSAP flies the mark onto the page's own logo and wipes the sheet up (0.9s, power4.inOut). On the cover, GSAP then raises the title lines through masks and brings in the next-round panel and contents rows. With reduce motion on, the logo still draws and the sheet fades. An inline script shows the sheet before paint and removes it after 7s regardless, so it never blocks the page.
 - **Page turn:** on internal navigation a spot-yellow sheet wipes in from the right (520ms, cubic-bezier(0.16, 1, 0.3, 1)) showing the destination's page number and section, the route changes beneath it, and it leaves to the left (460ms).
 - **Ink roll:** spread and page headings reveal left to right with a clip-path (800ms) when scrolled into view.
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
