@@ -203,9 +203,9 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Page turn:** on internal navigation a spot-yellow sheet wipes in from the right (520ms, cubic-bezier(0.16, 1, 0.3, 1)) showing the destination's page number and section, the route changes beneath it, and it leaves to the left (460ms).
 - **Ink roll:** spread and page headings reveal left to right with a clip-path (800ms) when scrolled into view.
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
-- **Cursor:** a spot-yellow dot trailing the pointer (eased at 0.2 per frame), multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Fine pointers only.
+- **Cursor:** a spot-yellow dot trailing the pointer (eased at 0.2 per frame), multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Shown whenever a mouse or trackpad is present, touchscreen laptops included.
 - **Scroll:** Lenis smooth scrolling.
-- **Reduced motion:** no Lenis, no page turn, no custom cursor; everything is visible immediately.
+- **Reduced motion:** no page turn and no reveals; everything is visible immediately. The cursor stays but follows the pointer instantly. Lenis is currently forced on for everyone at the team's request (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component); set it to false to respect the setting again.
 
 ## Do's and Don'ts
 
