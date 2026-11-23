@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/PageHero";
-import { ImageBox, Ph } from "@/components/Placeholder";
-import Section from "@/components/Section";
+import { Photo, Ph } from "@/components/Placeholder";
+import { PageHead, Roundel, SpreadHead } from "@/components/Print";
 
 export const metadata: Metadata = { title: "Car" };
+
+// Parts every STEM Racing car has; the notes are for the team to fill in.
+const callouts = ["Front wing", "Nose cone", "Front wheels", "Sidepods", "CO₂ canister chamber", "Rear wing", "Rear wheels", "Tether line guides"];
 
 const specs = [
   ["Mass", "[g]"],
@@ -16,68 +18,89 @@ const specs = [
   ["Best track time", "[s]"],
 ];
 
-const process = [
-  ["Research and concept", "[Early research and sketches.]"],
-  ["CAD", "[Software used and how many iterations.]"],
-  ["CFD and wind tunnel", "[What you tested and what changed.]"],
-  ["Manufacture", "[Machining, printing, finishing.]"],
-  ["Testing", "[Track runs and refinements.]"],
+const notes = [
+  ["Research", "[What you studied first and the ideas you sketched.]"],
+  ["CAD", "[Software used and how many design iterations you went through.]"],
+  ["CFD and wind tunnel", "[What you tested and what you changed because of it.]"],
+  ["Manufacture", "[How the body and wheels were made and finished.]"],
+  ["Testing", "[Track runs, times and the changes they led to.]"],
 ];
 
 export default function CarPage() {
   return (
     <>
-      <PageHero title={<Ph>[Car name]</Ph>}>
-        <Ph>[One sentence on the car and its design idea.]</Ph>
-      </PageHero>
+      <PageHead href="/car/" title={<Ph>[Car name]</Ph>}>
+        <Ph>[One sentence on the car and the idea behind its design.]</Ph>
+      </PageHead>
 
-      <div className="container">
-        <ImageBox label="Car render" ratio="21 / 9" />
-      </div>
+      <section className="container" aria-label="Car profile">
+        <Photo caption="The car, side profile on a plain background" ratio="21 / 9" cursor="View" />
+        <ol className="callouts" style={{ marginTop: 28 }} data-reveal="rows">
+          {callouts.map((c, i) => (
+            <li key={c}>
+              <Roundel no={String(i + 1)} />
+              <span>
+                <strong>{c}.</strong> <Ph>[note]</Ph>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
 
-      <Section title="Specification">
-        <table className="table">
-          <tbody>
-            {specs.map(([name, unit]) => (
-              <tr key={name}>
-                <th scope="row">{name}</th>
-                <td className="mono">
-                  <Ph>{unit}</Ph>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </Section>
+      <section className="spread container" aria-labelledby="h-spec">
+        <SpreadHead id="h-spec" title="Specification" />
+        <div className="cols">
+          <div className="span-7">
+            <table className="ledger">
+              <tbody data-reveal="rows">
+                {specs.map(([name, unit]) => (
+                  <tr key={name}>
+                    <th scope="row">{name}</th>
+                    <td>
+                      <Ph>{unit}</Ph>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="span-5">
+            <Photo caption="CFD pressure plot" ratio="4 / 3" cursor="View" />
+          </div>
+        </div>
+      </section>
 
-      <Section title="Process">
-        <div className="cols cols--2">
-          <ol className="steps">
-            {process.map(([name, note]) => (
-              <li key={name}>
+      <section className="spread container" aria-labelledby="h-notes">
+        <SpreadHead id="h-notes" title="Design notes" />
+        <div className="cols">
+          <ol className="notes span-7" data-reveal="rows">
+            {notes.map(([title, note], i) => (
+              <li key={title}>
+                <Roundel no={String(i + 1)} />
                 <div>
-                  <h3 style={{ fontSize: "1rem" }}>{name}</h3>
-                  <p className="muted" style={{ marginTop: 4 }}>
+                  <h3>{title}</h3>
+                  <p>
                     <Ph>{note}</Ph>
                   </p>
                 </div>
               </li>
             ))}
           </ol>
-          <div className="stack">
-            <ImageBox label="CFD result" ratio="16 / 10" />
-            <ImageBox label="Manufacturing photo" ratio="16 / 10" />
+          <div className="span-5" style={{ display: "grid", gap: 24, alignContent: "start" }}>
+            <Photo caption="Machining the body" ratio="4 / 3" cursor="View" />
+            <Photo caption="Wind tunnel smoke test" ratio="4 / 3" cursor="View" />
           </div>
         </div>
-      </Section>
+      </section>
 
-      <Section title="Photos">
-        <div className="cols cols--3">
-          {Array.from({ length: 6 }, (_, i) => (
-            <ImageBox key={i} label={`Photo ${i + 1}`} ratio="4 / 3" />
+      <section className="spread container" aria-labelledby="h-gallery">
+        <SpreadHead id="h-gallery" title="Gallery" />
+        <div className="gallery">
+          {["Front three-quarter", "Rear detail", "Wheels and axles", "On the track", "In the pit display", "Final finish"].map((c) => (
+            <Photo key={c} caption={c} ratio="4 / 3" cursor="View" />
           ))}
         </div>
-      </Section>
+      </section>
     </>
   );
 }

@@ -1,37 +1,74 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/PageHero";
-import { ImageBox, Ph } from "@/components/Placeholder";
-import { posts } from "@/lib/site";
+import { Photo, Ph } from "@/components/Placeholder";
+import { PageHead, SpreadHead } from "@/components/Print";
+import { posts, rounds } from "@/lib/site";
 
 export const metadata: Metadata = { title: "News" };
 
 export default function NewsPage() {
   return (
     <>
-      <PageHero title="News">
-        <Ph>[One line on what gets posted here.]</Ph>
-      </PageHero>
+      <PageHead href="/news/" title="News">
+        The season round by round: results after each event, and news from the workshop in between.
+      </PageHead>
 
-      <div className="container">
-        <ul className="rows rows--thumbs">
+      <section className="container" aria-labelledby="h-results">
+        <SpreadHead id="h-results" title="Results" />
+        <div className="table-scroll">
+          <table className="ledger">
+            <thead>
+              <tr>
+                <th scope="col">Round</th>
+                <th scope="col">Event</th>
+                <th scope="col">Venue</th>
+                <th scope="col">Date</th>
+                <th scope="col">Result</th>
+              </tr>
+            </thead>
+            <tbody data-reveal="rows">
+              {rounds.map((r) => (
+                <tr key={r.round}>
+                  <td className="num">{r.round}</td>
+                  <th scope="row">
+                    <Ph>{r.event}</Ph>
+                  </th>
+                  <td>
+                    <Ph>{r.venue}</Ph>
+                  </td>
+                  <td>
+                    <Ph>{r.date}</Ph>
+                  </td>
+                  <td>
+                    <Ph>{r.result}</Ph>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="spread container" aria-labelledby="h-bulletins">
+        <SpreadHead id="h-bulletins" title="Bulletins" />
+        <ol className="bulletins" data-reveal="rows">
           {posts.map((p) => (
-            <li key={p.title}>
-              <span className="rows__key mono">
+            <li className="bulletin" key={p.title}>
+              <span className="bulletin__date">
                 <Ph>{p.date}</Ph>
               </span>
               <div>
-                <h2 style={{ fontSize: "1.25rem" }}>
+                <h2 className="bulletin__title">
                   <Ph>{p.title}</Ph>
                 </h2>
-                <p className="muted" style={{ marginTop: 6 }}>
+                <p>
                   <Ph>{p.summary}</Ph>
                 </p>
               </div>
-              <ImageBox label="Image" ratio="3 / 2" />
+              <Photo caption="Photo from the day" ratio="3 / 2" />
             </li>
           ))}
-        </ul>
-      </div>
+        </ol>
+      </section>
     </>
   );
 }

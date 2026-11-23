@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/PageHero";
 import { Ph } from "@/components/Placeholder";
-import Section from "@/components/Section";
+import { PageHead, SocialLinks } from "@/components/Print";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Contact" };
@@ -9,67 +8,77 @@ export const metadata: Metadata = { title: "Contact" };
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact">For sponsorship, press or school visits.</PageHero>
+      <PageHead href="/contact/" title="Contact">
+        For sponsorship, press, school visits or questions about the team.
+      </PageHead>
 
-      <Section title="Details">
-        <ul className="rows">
-          <li>
-            <span className="rows__key">General</span>
-            <Ph>{site.email}</Ph>
-          </li>
-          <li>
-            <span className="rows__key">Sponsorship</span>
-            <Ph>[sponsors]@eclipseracing.co.uk</Ph>
-          </li>
-          <li>
-            <span className="rows__key">Based at</span>
-            <Ph>[School, town]</Ph>
-          </li>
-          <li>
-            <span className="rows__key">Social</span>
-            <span>
-              {site.socials.map((s, i) => (
-                <span key={s.label}>
-                  {i > 0 && ", "}
-                  <a href={s.href}>{s.label}</a>
-                </span>
-              ))}
-            </span>
-          </li>
-        </ul>
-      </Section>
+      <section className="container cols" aria-label="Contact details and form">
+        <div className="span-5">
+          <table className="ledger">
+            <tbody>
+              <tr>
+                <th scope="row">General</th>
+                <td>
+                  <Ph>{site.email}</Ph>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Sponsorship</th>
+                <td>
+                  <Ph>{site.sponsorEmail}</Ph>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Based at</th>
+                <td>
+                  <Ph>{site.base}</Ph>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Social</th>
+                <td>
+                  <SocialLinks />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <Section title="Message">
-        <form className="form" aria-describedby="form-status">
-          <div className="field">
-            <label htmlFor="name">Name</label>
-            <input id="name" name="name" autoComplete="name" />
-          </div>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" autoComplete="email" />
-          </div>
-          <div className="field">
-            <label htmlFor="topic">Topic</label>
-            <select id="topic" name="topic" defaultValue="Sponsorship">
-              <option>Sponsorship</option>
-              <option>Press</option>
-              <option>School visit</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div className="field">
-            <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" />
-          </div>
-          <p id="form-status" className="muted" style={{ fontSize: "0.9375rem" }}>
-            This form is not connected yet.
-          </p>
-          <button type="submit" className="button" disabled>
-            Send
-          </button>
-        </form>
-      </Section>
+        <div className="span-7">
+          <form className="form" aria-describedby="form-status">
+            <h2 className="form__h">Message form</h2>
+            <div className="field">
+              <label htmlFor="name">Your name</label>
+              <input id="name" name="name" autoComplete="name" />
+            </div>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input id="email" name="email" type="email" autoComplete="email" />
+            </div>
+            <div className="field">
+              <label htmlFor="topic">About</label>
+              <select id="topic" name="topic" defaultValue="Sponsorship">
+                <option>Sponsorship</option>
+                <option>Press</option>
+                <option>School visit</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div className="field field--stack">
+              <label htmlFor="message">Message</label>
+              <textarea id="message" name="message" />
+            </div>
+            <p id="form-status" className="form__note">
+              This form is not connected yet. Until it is, please email us.
+            </p>
+            <div>
+              <button type="submit" className="button" disabled>
+                Send message
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
     </>
   );
 }

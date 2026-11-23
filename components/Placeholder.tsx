@@ -1,20 +1,25 @@
-// Mockup helpers: flat placeholders for content the team still has to supply.
+// Placeholders for content the team still has to supply, drawn as print would show them.
 
-type BoxProps = {
-  label: string;
-  ratio?: string; // CSS aspect-ratio, e.g. "16 / 9"
+type PhotoProps = {
+  caption: string; // what the photo should show, e.g. "Team at the workshop"
+  ratio?: string; // CSS aspect-ratio
+  cursor?: string; // optional cursor label
+  className?: string;
 };
 
-/** Grey box standing in for a photo, render or logo. */
-export function ImageBox({ label, ratio = "16 / 9" }: BoxProps) {
+/** A halftone-screened photo slot with a programme-style caption. */
+export function Photo({ caption, ratio = "4 / 3", cursor, className = "" }: PhotoProps) {
   return (
-    <div className="ph-image" style={{ aspectRatio: ratio }} role="img" aria-label={`Placeholder: ${label}`}>
-      <span>{label}</span>
-    </div>
+    <figure className={`photo ${className}`} data-cursor={cursor}>
+      <div className="photo__plate" style={{ aspectRatio: ratio }} role="img" aria-label={`Photo to come: ${caption}`} />
+      <figcaption className="photo__caption">
+        Photo: <Ph>[{caption}]</Ph>
+      </figcaption>
+    </figure>
   );
 }
 
-/** Grey bracketed text marking copy still to be written, e.g. <Ph>[Car name]</Ph>. */
+/** Copy still to be written, shown in brackets, e.g. <Ph>[Car name]</Ph>. */
 export function Ph({ children }: { children: React.ReactNode }) {
-  return <span className="ph-text">{children}</span>;
+  return <span className="ph">{children}</span>;
 }

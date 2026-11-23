@@ -2,20 +2,22 @@
 
 The official GitHub repository and source code for the Eclipse Racing website. Eclipse Racing is a STEM Racing team in the Professional Class.
 
-> **Status: mockup.** Grey boxes stand in for photos and logos, and grey *[bracketed text]* marks copy still to be written.
+> **Status: mockup.** Grey halftone plates stand in for photos, and grey *[bracketed text]* marks copy still to be written.
 
-The design is deliberately minimal: flat colours, one type family (IBM Plex), hairline dividers, and yellow used only in the logo. Avoid adding gradients, glows, rounded cards, pill badges or marketing-style filler headlines.
+The site is designed as the team's **race-day programme**: a black cover with the logo, numbered pages in black ink on newsprint grey, and the logo yellow as the one spot colour. The full design system is in [`DESIGN.md`](DESIGN.md); product facts are in [`PRODUCT.md`](PRODUCT.md).
+
+**Motion:** Lenis smooth scrolling, a yellow page-turn transition between pages, headings that roll on as you scroll, lists that print row by row, and a custom ink-dot cursor that eases after the pointer and reacts to links and photos. The cursor only appears on mouse/trackpad devices, and anyone with "reduce motion" turned on gets a calm site with none of these effects.
 
 ## Pages
 
 | Route | Contents |
 |---|---|
-| `/` | Intro with logo, about, car, team, sponsors, latest news |
-| `/team/` | Members by role, how we work, support |
-| `/car/` | Render, specification, design process, photos |
-| `/sponsors/` | Sponsors by tier, sponsorship levels table, sponsor pack |
-| `/news/` | List of posts |
-| `/contact/` | Contact details, form (not connected yet) |
+| `/` | Cover (next round, contents), entry list, technical, timetable, results and news, adverts |
+| `/team/` | Entry list with race numbers, how we work, pit crew |
+| `/car/` | Profile with keyed parts, specification, design notes, gallery |
+| `/sponsors/` | Adverts in programme sizes, advertising rates |
+| `/news/` | Results table, bulletins |
+| `/contact/` | Contact details, message form (not connected yet) |
 
 ## Running it locally
 
@@ -30,12 +32,13 @@ Then open http://localhost:3000.
 
 ## Where to edit things
 
-- **Team roles, sponsor tiers, news posts, socials, email**: `lib/site.ts`
+- **Pages and page numbers, team roles, rounds, news posts, advert slots, socials, email**: `lib/site.ts`
 - **Page content**: `app/<page>/page.tsx` (the home page is `app/page.tsx`)
 - **Colours, fonts, spacing**: the tokens at the top of `app/globals.css`
+- **Motion**: `components/motion/` (`SmoothScroll`, `PageTurn`, `Cursor`, `Reveal`)
 - **Logo**: `components/Logo.tsx` (used on the site; recolours via CSS), `public/logo.svg` (standalone file), `app/icon.svg` (browser tab icon)
 
-To replace a placeholder, swap `<ImageBox label="…" />` for a real `<img>`, and `<Ph>…</Ph>` for real text. News posts are listed in `lib/site.ts` for now.
+To replace a placeholder, swap `<Photo caption="…" />` for a real `<img>`, and `<Ph>…</Ph>` for real text. News posts are listed in `lib/site.ts` for now.
 
 ## Deployment
 
