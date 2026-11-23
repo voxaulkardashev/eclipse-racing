@@ -1307,22 +1307,48 @@ main > :last-child.band {
   color: var(--ink);
 }
 
-/* On yellow, the other way round: a black dot; over links the disc inverts what is under it,
-   so yellow turns black and black text turns yellow. */
-.cursor.is-spot {
-  mix-blend-mode: normal;
+/* Spot layer: the same disc in black, clipped by the script to exactly the parts of the cursor
+   over yellow ground. Over links it inverts instead (yellow turns black, black text turns yellow). */
+.cursor-spot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483647;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  opacity: 0;
+  clip-path: inset(50%);
+  transition: opacity 300ms var(--ease);
 }
 
-.cursor.is-spot .cursor__disc {
+.cursor-spot.is-visible {
+  opacity: 1;
+}
+
+.cursor-spot.is-hidden,
+.cursor-spot.is-label {
+  opacity: 0;
+}
+
+.cursor-spot__disc {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   background-color: var(--ink);
-  box-shadow: inset 0 0 0 0 var(--ink);
+  transform: scale(0.26);
+  will-change: transform;
+  transition: background-color 320ms var(--ease);
 }
 
-.cursor.is-spot.is-link {
+.cursor-spot.is-link {
   mix-blend-mode: difference;
 }
 
-.cursor.is-spot.is-link .cursor__disc {
+.cursor-spot.is-link .cursor-spot__disc {
   background-color: var(--spot);
 }
 
@@ -1477,7 +1503,7 @@ main > :last-child.band {
 
 @media (prefers-reduced-motion: reduce) {
   /* The cursor keeps its easing at the team's request; everything else goes still. */
-  *:not(.cursor, .cursor *),
+  *:not(.cursor, .cursor *, .cursor-spot, .cursor-spot *),
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
