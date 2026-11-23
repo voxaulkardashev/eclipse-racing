@@ -205,7 +205,7 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
 - **Cursor:** a spot-yellow dot trailing the pointer (eased at 0.2 per frame), multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Shown whenever a mouse or trackpad is present, touchscreen laptops included.
 - **Scroll:** Lenis smooth scrolling.
-- **Reduced motion:** no Lenis, no page turn, no reveals; everything is visible immediately. The cursor stays but follows the pointer instantly, without trailing or size animation.
+- **Reduced motion:** no page turn and no reveals; everything is visible immediately. The cursor stays but follows the pointer instantly. Lenis is currently forced on for everyone at the team's request (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component); set it to false to respect the setting again.
 
 ## Do's and Don'ts
 

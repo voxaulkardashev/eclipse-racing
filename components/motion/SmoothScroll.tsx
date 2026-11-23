@@ -10,10 +10,14 @@ declare global {
   }
 }
 
-/** Lenis smooth scrolling. Skipped entirely for reduced-motion users. */
+// Temporary: the team asked for Lenis to run for everyone, even with "reduce motion" on
+// (Windows: Animation effects off). Set to false to respect that setting again.
+const FORCE_SMOOTH_SCROLL = true;
+
+/** Lenis smooth scrolling. */
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!FORCE_SMOOTH_SCROLL && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const lenis = new Lenis({
       autoRaf: true,

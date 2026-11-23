@@ -6,7 +6,7 @@ The official GitHub repository and source code for the Eclipse Racing website. E
 
 The site is designed as the team's **race-day programme**: a black cover with the logo, numbered pages in black ink on newsprint grey, and the logo yellow as the one spot colour. The full design system is in [`DESIGN.md`](DESIGN.md); product facts are in [`PRODUCT.md`](PRODUCT.md).
 
-**Motion:** Lenis smooth scrolling, a yellow page-turn transition between pages, headings that roll on as you scroll, lists that print row by row, and a custom ink-dot cursor that eases after the pointer and reacts to links and photos. The cursor appears whenever a mouse or trackpad is used. Anyone with "reduce motion" turned on (on Windows: Animation effects off) gets no smooth scrolling, page-turn or reveals, and a cursor that follows instantly instead of trailing.
+**Motion:** Lenis smooth scrolling, a yellow page-turn transition between pages, headings that roll on as you scroll, lists that print row by row, and a custom ink-dot cursor that eases after the pointer and reacts to links and photos. The cursor appears whenever a mouse or trackpad is used. Anyone with "reduce motion" turned on (on Windows: Animation effects off) gets no page-turn or reveals, and a cursor that follows instantly instead of trailing. Lenis smooth scrolling is currently forced on for everyone; to respect the setting again, set `FORCE_SMOOTH_SCROLL` to `false` in `components/motion/SmoothScroll.tsx`.
 
 ## Pages
 
