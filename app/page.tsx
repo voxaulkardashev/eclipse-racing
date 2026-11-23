@@ -35,7 +35,7 @@ export default function CoverPage() {
             </div>
 
             <div className="cover__side">
-              <div className="next-round">
+              <div className="next-round" data-ink="spot">
                 <h2 className="display">Next round</h2>
                 <dl>
                   <dt>Event</dt>
@@ -130,7 +130,7 @@ export default function CoverPage() {
       </section>
 
       {/* Timetable */}
-      <section className="band" aria-labelledby="h-timetable">
+      <section className="band" data-ink="spot" aria-labelledby="h-timetable">
         <div className="container">
           <SpreadHead id="h-timetable" title="Timetable" to="/news/" />
           <div className="table-scroll">
@@ -192,7 +192,7 @@ export default function CoverPage() {
         <div className="ads">
           {adTiers.slice(0, 2).flatMap((t) =>
             Array.from({ length: t.slots }, (_, i) => (
-              <div className={`ad ad--${t.span}`} key={`${t.level}-${i}`}>
+              <div className={`ad ad--${t.span}`} data-ink={t.span === "full" ? "spot" : undefined} key={`${t.level}-${i}`}>
                 <span className="ad__meta">
                   {t.level} · {t.size}
                 </span>

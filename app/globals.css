@@ -90,7 +90,7 @@ a:hover {
   text-decoration-color: var(--ink);
 }
 
-[data-theme="dark"] a:hover {
+[data-theme="dark"] a:not(.button):hover {
   background-color: transparent;
   color: var(--spot);
   text-decoration-color: var(--spot);
@@ -809,7 +809,21 @@ a:hover {
   color: #3d3a2a;
 }
 
-.band a:hover {
+/* On any yellow ground, hover and selection flip to black with yellow text */
+[data-ink="spot"] a:not(.button):hover {
+  background: var(--ink);
+  color: var(--spot);
+  text-decoration-color: var(--spot);
+}
+
+/* Buttons on yellow keep their black and yellow on hover, so the cursor can invert them */
+[data-ink="spot"] .button:hover {
+  background: var(--ink);
+  color: var(--spot);
+}
+
+[data-ink="spot"] ::selection,
+[data-ink="spot"]::selection {
   background: var(--ink);
   color: var(--spot);
 }
@@ -1195,10 +1209,10 @@ main > :last-child.band {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 400;
+  z-index: 2147483647; /* above everything, the loading screen included */
   pointer-events: none;
   opacity: 0;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
   transition: opacity 300ms var(--ease);
 }
 
@@ -1210,7 +1224,8 @@ main > :last-child.band {
   opacity: 0;
 }
 
-/* Size (scale) is eased per frame by the script; colour and ring cross-fade here. */
+/* Size (scale) is eased per frame by the script; colour, ring and blend cross-fade here.
+   The resting dot carries a black ring (4px at scale 0.25 = 1px) so it reads on grey paper. */
 .cursor__disc {
   display: grid;
   place-items: center;
@@ -1218,7 +1233,8 @@ main > :last-child.band {
   height: 56px;
   margin: -28px 0 0 -28px;
   border-radius: 50%;
-  background: var(--spot);
+  background-color: var(--spot);
+  box-shadow: inset 0 0 0 4px var(--ink);
   transform: scale(0.25);
   will-change: transform;
   transition:
@@ -1241,13 +1257,23 @@ main > :last-child.band {
     color 200ms var(--ease);
 }
 
+/* Paper, over links: an open highlighter. Multiply keeps the link text legible through it. */
+.cursor.is-link {
+  mix-blend-mode: multiply;
+}
+
+.cursor.is-link .cursor__disc {
+  box-shadow: inset 0 0 0 0 var(--ink);
+}
+
 /* Over labelled elements: an ink disc carrying the label */
 .cursor.is-label {
   mix-blend-mode: normal;
 }
 
 .cursor.is-label .cursor__disc {
-  background: var(--ink);
+  background-color: var(--ink);
+  box-shadow: inset 0 0 0 0 var(--ink);
 }
 
 .cursor.is-label .cursor__label {
@@ -1259,9 +1285,13 @@ main > :last-child.band {
     color 200ms var(--ease);
 }
 
-/* On black, multiply would hide the yellow: draw it directly */
+/* On black: plain yellow dot; over links a yellow ring. */
 .cursor.is-dark {
   mix-blend-mode: normal;
+}
+
+.cursor.is-dark .cursor__disc {
+  box-shadow: inset 0 0 0 0 var(--spot);
 }
 
 .cursor.is-dark.is-link .cursor__disc {
@@ -1270,11 +1300,30 @@ main > :last-child.band {
 }
 
 .cursor.is-dark.is-label .cursor__disc {
-  background: var(--spot);
+  background-color: var(--spot);
 }
 
 .cursor.is-dark.is-label .cursor__label {
   color: var(--ink);
+}
+
+/* On yellow, the other way round: a black dot; over links the disc inverts what is under it,
+   so yellow turns black and black text turns yellow. */
+.cursor.is-spot {
+  mix-blend-mode: normal;
+}
+
+.cursor.is-spot .cursor__disc {
+  background-color: var(--ink);
+  box-shadow: inset 0 0 0 0 var(--ink);
+}
+
+.cursor.is-spot.is-link {
+  mix-blend-mode: difference;
+}
+
+.cursor.is-spot.is-link .cursor__disc {
+  background-color: var(--spot);
 }
 
 /* First-visit loading screen: the logo is drawn, then the sheet wipes up */

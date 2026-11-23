@@ -127,6 +127,8 @@ Two-colour offset print: one ink, one spot colour, one paper stock.
 
 **The Flood Rule.** Yellow is printed as a solid area that owns a region (a panel, a band, a tab, a sheet). It is never a glow, an outline accent on paper, or a coloured word inside a black heading.
 
+**The Flip On Yellow Rule.** Anything that is yellow on paper or black (text selection, link hover, the cursor) turns black on yellow ground. Every yellow surface carries `data-ink="spot"` so styles and the cursor can tell.
+
 **The Logo On Black Rule.** The logo's car is white, so the mark only appears on press-black grounds: masthead, cover, back cover.
 
 ## Typography
@@ -204,7 +206,7 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Page turn:** on internal navigation a spot-yellow sheet wipes in from the right (520ms, cubic-bezier(0.16, 1, 0.3, 1)) showing the destination's page number and section, the route changes beneath it, and it leaves to the left (460ms).
 - **Ink roll:** spread and page headings reveal left to right with a clip-path (800ms) when scrolled into view.
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
-- **Cursor:** a spot-yellow dot trailing the pointer, multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Position and size are both eased every frame (follow 0.16, grow 0.14), so hovering in, out and between states glides and can be interrupted; colour, ring and label cross-fade (320ms, label fades in after the disc opens). Shown whenever a mouse or trackpad is present, touchscreen laptops included.
+- **Cursor:** drawn above everything (top z-index, normal blend). On paper a spot-yellow dot with a 1px black ring; over links it opens into a highlighter disc (multiply, so the link text stays legible). On black a yellow dot, and a yellow ring over links. On yellow ground (`data-ink="spot"`) the other way round: a black dot, and over links the disc inverts what is under it (difference: yellow turns black, black text turns yellow). Over marked images a black disc with a label ("View"). Position and size are eased every frame (follow 0.16, grow 0.14), so hovering in, out and between states glides and can be interrupted; colour, ring and label cross-fade (320ms). Shown whenever a mouse or trackpad is present, touchscreen laptops included.
 - **Scroll:** Lenis smooth scrolling with a long glide (lerp 0.055, wheel multiplier 1.15).
 - **Reduced motion:** no page turn and no reveals; everything is visible immediately. At the team's request the cursor keeps its easing and Lenis is forced on (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component, which also stops Lenis's own reduced-motion check); set the flag to false to respect the setting again.
 

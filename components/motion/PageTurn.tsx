@@ -76,7 +76,7 @@ export default function PageTurn() {
   }, [pathname]);
 
   return (
-    <div ref={sheet} className="page-turn" aria-hidden="true">
+    <div ref={sheet} className="page-turn" data-ink="spot" aria-hidden="true">
       {dest && (
         <div className="page-turn__inner">
           <span className="page-turn__folio" aria-label={`Page ${dest.folio}`}>{dest.folio}</span>
