@@ -53,17 +53,20 @@ export default function Header() {
       </div>
 
       <div id="contents-panel" className={`contents-panel ${open ? "is-open" : ""}`} hidden={!open}>
-        <ol className="contents contents--panel container">
-          {pages.map((p) => (
-            <li key={p.href}>
-              <Link href={p.href} aria-current={isActive(p.href) ? "page" : undefined}>
-                <span className="contents__label">{p.label}</span>
-                <span className="contents__leader" aria-hidden="true" />
-                <span className="contents__folio">{p.folio}</span>
-              </Link>
-            </li>
-          ))}
-        </ol>
+        {/* The gutter lives on a wrapper: .contents resets padding, which would cancel .container's. */}
+        <div className="container">
+          <ol className="contents contents--panel">
+            {pages.map((p) => (
+              <li key={p.href}>
+                <Link href={p.href} aria-current={isActive(p.href) ? "page" : undefined}>
+                  <span className="contents__label">{p.label}</span>
+                  <span className="contents__leader" aria-hidden="true" />
+                  <span className="contents__folio">{p.folio}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </header>
   );
