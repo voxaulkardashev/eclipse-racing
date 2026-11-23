@@ -4,46 +4,66 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
-import { nav } from "@/lib/site";
+import { pages } from "@/lib/site";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // Close the mobile menu after navigating.
   useEffect(() => setOpen(false), [pathname]);
 
+  // Lock page scroll while the contents panel is open.
+  useEffect(() => {
+    document.documentElement.classList.toggle("contents-open", open);
+    if (open) window.__lenis?.stop();
+    else window.__lenis?.start();
+  }, [open]);
+
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href.replace(/\/$/, "")));
+  const inner = pages.filter((p) => p.href !== "/");
 
   return (
-    <header className="site-header">
-      <div className="container site-header__inner">
-        <Link href="/" className="brand" aria-label="Eclipse Racing home">
+    <header className="masthead" data-theme="dark">
+      <div className="container masthead__inner">
+        <Link href="/" className="masthead__logo" aria-label="Eclipse Racing, cover page">
           <Logo />
         </Link>
 
-        <button
-          className="menu-toggle"
-          aria-expanded={open}
-          aria-controls="site-nav"
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? "Close" : "Menu"}
-        </button>
-
-        <nav id="site-nav" className={`site-nav ${open ? "is-open" : ""}`} aria-label="Main">
+        <nav className="masthead__nav" aria-label="Main">
           <ul>
-            {nav
-              .filter((item) => item.href !== "/")
-              .map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+            {inner.map((p) => (
+              <li key={p.href}>
+                <Link href={p.href} aria-current={isActive(p.href) ? "page" : undefined}>
+                  <span className="masthead__folio">{p.folio}</span>
+                  {p.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
+
+        <button
+          className="masthead__toggle"
+          aria-expanded={open}
+          aria-controls="contents-panel"
+          onClick={() => setOpen((o) => !o)}
+        >
+          {open ? "Close" : "Contents"}
+        </button>
+      </div>
+
+      <div id="contents-panel" className={`contents-panel ${open ? "is-open" : ""}`} hidden={!open}>
+        <ol className="contents contents--panel container">
+          {pages.map((p) => (
+            <li key={p.href}>
+              <Link href={p.href} aria-current={isActive(p.href) ? "page" : undefined}>
+                <span className="contents__label">{p.label}</span>
+                <span className="contents__leader" aria-hidden="true" />
+                <span className="contents__folio">{p.folio}</span>
+              </Link>
+            </li>
+          ))}
+        </ol>
       </div>
     </header>
   );

@@ -1,77 +1,73 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import PageHero from "@/components/PageHero";
-import { ImageBox, Ph } from "@/components/Placeholder";
-import Section from "@/components/Section";
-import { sponsorTiers } from "@/lib/site";
+import { Ph } from "@/components/Placeholder";
+import { PageHead, SpreadHead } from "@/components/Print";
+import { adTiers, site } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Sponsors" };
-
-const packages = [
-  ["Title partner", "[£]", "[What a title partner gets, e.g. logo on car and team kit.]"],
-  ["Gold", "[£]", "[What gold sponsors get.]"],
-  ["Silver", "[£]", "[What silver sponsors get.]"],
-  ["Supporter", "[£ / in kind]", "[Materials, tools, services or mentoring.]"],
-];
 
 export default function SponsorsPage() {
   return (
     <>
-      <PageHero title="Sponsors">
-        <Ph>[Thank you to current sponsors, and a line on what their support pays for.]</Ph>
-      </PageHero>
+      <PageHead href="/sponsors/" title="Sponsors">
+        Every advert in this programme pays for part of the season: materials, machining, travel and entry fees.
+        Empty spaces are still available.
+      </PageHead>
 
-      <Section title="Current sponsors">
-        {sponsorTiers.map((tier) => (
-          <div className="tier" key={tier.name}>
-            <h3 className="muted">{tier.name}</h3>
-            <div className={`logos logos--${tier.slots}`}>
-              {Array.from({ length: tier.slots }, (_, i) => (
-                <ImageBox key={i} label="Logo" ratio={tier.slots >= 6 ? "3 / 2" : "5 / 2"} />
-              ))}
-            </div>
+      <section className="container" aria-label="Sponsor adverts">
+        <div className="ads">
+          {adTiers.flatMap((t) =>
+            Array.from({ length: t.slots }, (_, i) => (
+              <div className={`ad ad--${t.span}`} key={`${t.level}-${i}`}>
+                <span className="ad__meta">{t.size}</span>
+                <span className="ad__title">{t.span === "eighth" ? "Available" : "This space is available"}</span>
+                <span className="ad__meta">{t.level}</span>
+              </div>
+            )),
+          )}
+        </div>
+      </section>
+
+      <section className="spread container" aria-labelledby="h-rates">
+        <SpreadHead id="h-rates" title="Advertising rates" />
+        <div className="cols">
+          <div className="span-4">
+            <p className="lede">
+              <Ph>[Why a company should back the team: who sees their name, the school outreach you do, and the engineers of the future they meet.]</Ph>
+            </p>
           </div>
-        ))}
-      </Section>
-
-      <Section title="Sponsorship">
-        <div className="prose" style={{ marginBottom: 32 }}>
-          <p>
-            <Ph>[Why a company should support the team: visibility, outreach, links with future engineers.]</Ph>
-          </p>
-        </div>
-        <div className="table-scroll">
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Level</th>
-                <th scope="col">Contribution</th>
-                <th scope="col">Includes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {packages.map(([level, amount, includes]) => (
-                <tr key={level}>
-                  <th scope="row" style={{ color: "var(--text)" }}>
-                    {level}
-                  </th>
-                  <td className="mono">
-                    <Ph>{amount}</Ph>
-                  </td>
-                  <td>
-                    <Ph>{includes}</Ph>
-                  </td>
+          <div className="span-8 table-scroll">
+            <table className="ledger">
+              <thead>
+                <tr>
+                  <th scope="col">Level</th>
+                  <th scope="col">Advert</th>
+                  <th scope="col">Contribution</th>
+                  <th scope="col">Includes</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody data-reveal="rows">
+                {adTiers.map((t) => (
+                  <tr key={t.level}>
+                    <th scope="row">{t.level}</th>
+                    <td>{t.size}</td>
+                    <td>
+                      <Ph>[£]</Ph>
+                    </td>
+                    <td>
+                      <Ph>[What this level gets, e.g. logo on the car or team kit]</Ph>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p style={{ marginTop: 24 }}>
+              <Ph>[Sponsor pack (PDF)]</Ph> · Write to <Ph>{site.sponsorEmail}</Ph> or use the{" "}
+              <Link href="/contact/">contact form</Link>.
+            </p>
+          </div>
         </div>
-        <p className="section__more">
-          <Ph>[Sponsor pack (PDF)]</Ph>
-          <span className="muted"> · </span>
-          <Link href="/contact/">Contact us about sponsorship</Link>
-        </p>
-      </Section>
+      </section>
     </>
   );
 }

@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T11:23:06+00:00",
+  "title": "Design System: Eclipse Racing",
+  "extensions": {
+    "colorMeta": {
+      "spot-yellow": {
+        "role": "primary",
+        "displayName": "Spot Yellow",
+        "canonical": "#fad443",
+        "tonalRamp": [
+          "#3b3311",
+          "#6a5815",
+          "#9f8214",
+          "#ecbd09",
+          "#eecb44",
+          "#e9d586",
+          "#ede4bf",
+          "#f8f6ed"
+        ]
+      },
+      "press-black": {
+        "role": "neutral",
+        "displayName": "Press Black",
+        "canonical": "#141414",
+        "tonalRamp": [
+          "#262626",
+          "#404040",
+          "#595959",
+          "#7a7a7a",
+          "#999999",
+          "#b8b8b8",
+          "#d6d6d6",
+          "#f2f2f2"
+        ]
+      },
+      "newsprint": {
+        "role": "neutral",
+        "displayName": "Newsprint",
+        "canonical": "#edede8",
+        "tonalRamp": [
+          "#292924",
+          "#45453a",
+          "#626250",
+          "#89896c",
+          "#a4a48e",
+          "#bebeb1",
+          "#d9d9d3",
+          "#f3f3f2"
+        ]
+      },
+      "newsprint-shade": {
+        "role": "neutral",
+        "displayName": "Newsprint Shade",
+        "canonical": "#e1e1db",
+        "tonalRamp": [
+          "#282824",
+          "#44443c",
+          "#606053",
+          "#858570",
+          "#a1a191",
+          "#bcbcb3",
+          "#d8d8d4",
+          "#f3f3f2"
+        ]
+      },
+      "sheet-white": {
+        "role": "neutral",
+        "displayName": "Sheet White",
+        "canonical": "#fafaf7",
+        "tonalRamp": [
+          "#2b2b21",
+          "#4a4a35",
+          "#6a6a48",
+          "#96965f",
+          "#aeae84",
+          "#c4c4ab",
+          "#dcdcd1",
+          "#f4f4f1"
+        ]
+      },
+      "ink-grey": {
+        "role": "neutral",
+        "displayName": "Ink Grey",
+        "canonical": "#4a4a45",
+        "tonalRamp": [
+          "#272725",
+          "#41413e",
+          "#5c5c57",
+          "#7f7f76",
+          "#9c9c96",
+          "#b9b9b6",
+          "#d7d7d5",
+          "#f2f2f2"
+        ]
+      },
+      "placeholder-grey": {
+        "role": "neutral",
+        "displayName": "Placeholder Grey",
+        "canonical": "#5c5c57",
+        "tonalRamp": [
+          "#272726",
+          "#41413f",
+          "#5b5b57",
+          "#7e7e77",
+          "#9c9c96",
+          "#b9b9b6",
+          "#d7d7d6",
+          "#f2f2f2"
+        ]
+      },
+      "cover-grey": {
+        "role": "neutral",
+        "displayName": "Cover Grey",
+        "canonical": "#a9a9a3",
+        "tonalRamp": [
+          "#272726",
+          "#41413e",
+          "#5c5c57",
+          "#7e7e76",
+          "#9c9c96",
+          "#b9b9b6",
+          "#d7d7d5",
+          "#f2f2f2"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Cover title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Spread headings on a 5px rule; page titles use a larger clamp(3.75rem, 11vw, 8.5rem)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Entry names, bulletin headlines, advert lines, note headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text with tabular figures."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Page introductions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Condensed Archivo for table heads, running heads, nav, dates and form labels."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-press",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All arrivals: page turn, ink roll, row print, cursor states."
+      },
+      {
+        "name": "page-turn-in",
+        "value": "520ms",
+        "purpose": "Yellow sheet wipes in from the right."
+      },
+      {
+        "name": "page-turn-out",
+        "value": "460ms (80ms delay)",
+        "purpose": "Sheet leaves to the left over the new page."
+      },
+      {
+        "name": "ink-roll",
+        "value": "800ms clip-path",
+        "purpose": "Headings reveal left to right."
+      },
+      {
+        "name": "row-print",
+        "value": "500-650ms, 70ms stagger, max 8",
+        "purpose": "List rows fade up 12px in sequence."
+      },
+      {
+        "name": "cursor-follow",
+        "value": "lerp 0.2 per frame",
+        "purpose": "Ink-dot cursor easing."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "single-column",
+        "value": "860px"
+      },
+      {
+        "name": "masthead-contents",
+        "value": "820px"
+      },
+      {
+        "name": "narrow",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one action per region, e.g. Latest results.",
+      "html": "<button class=\"ds-btn\">Latest results</button>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border:0;border-radius:0;background:#141414;color:#fad443;font-family:'Archivo Variable',Archivo,system-ui,sans-serif;font-weight:700;font-stretch:85%;font-size:1.0625rem;cursor:pointer;transition:background-color 150ms cubic-bezier(.16,1,.3,1),color 150ms cubic-bezier(.16,1,.3,1)}.ds-btn:hover{background:#000;color:#fff}.ds-btn:focus-visible{outline:2px solid #141414;outline-offset:3px}"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "masthead",
+      "description": "Sticky black band with page-numbered links.",
+      "html": "<nav class=\"ds-mast\"><a href=\"#\"><b>02</b>Team</a><a href=\"#\" aria-current=\"page\"><b>03</b>Car</a><a href=\"#\"><b>04</b>News</a></nav>",
+      "css": ".ds-mast{display:flex;gap:4px;height:64px;align-items:center;padding:0 24px;background:#141414}.ds-mast a{display:flex;gap:6px;align-items:baseline;padding:8px 12px;color:#a9a9a3;text-decoration:none;font-family:'Archivo Variable',Archivo,sans-serif;font-weight:600;font-stretch:75%;font-size:1.0625rem}.ds-mast a b{font-family:'Big Shoulders Display Variable','Arial Narrow',sans-serif;font-weight:700;font-size:.875rem;color:#fad443}.ds-mast a:hover,.ds-mast a[aria-current=page]{color:#edede8}.ds-mast a[aria-current=page]{box-shadow:inset 0 -3px 0 #fad443}"
+    },
+    {
+      "name": "Contents list",
+      "kind": "custom",
+      "description": "Label, dotted leader, page number.",
+      "html": "<ol class=\"ds-contents\"><li><a href=\"#\"><span>Entry list</span><i></i><b>02</b></a></li><li><a href=\"#\"><span>Technical</span><i></i><b>03</b></a></li></ol>",
+      "css": ".ds-contents{list-style:none;margin:0;padding:16px;background:#141414;color:#edede8}.ds-contents a{display:flex;gap:10px;align-items:baseline;padding:10px 0;color:inherit;text-decoration:none;border-bottom:1px solid rgba(237,237,232,.22);font-family:'Archivo Variable',Archivo,sans-serif;font-weight:600;font-stretch:85%}.ds-contents i{flex:1;border-bottom:2px dotted currentColor;opacity:.45;transform:translateY(-.3em)}.ds-contents b{font-family:'Big Shoulders Display Variable','Arial Narrow',sans-serif;font-weight:800;font-size:1.5rem;line-height:1}.ds-contents a:hover b{color:#fad443}"
+    },
+    {
+      "name": "Page-number tab",
+      "kind": "custom",
+      "refersTo": "folio-tab",
+      "description": "Yellow tab beside each page title.",
+      "html": "<span class=\"ds-folio\">03</span>",
+      "css": ".ds-folio{display:inline-block;padding:10px 14px 6px;background:#fad443;color:#141414;font-family:'Big Shoulders Display Variable','Arial Narrow',sans-serif;font-weight:800;font-size:3.75rem;line-height:.9}"
+    },
+    {
+      "name": "Race-number roundel",
+      "kind": "custom",
+      "refersTo": "roundel",
+      "description": "Running-order number.",
+      "html": "<span class=\"ds-roundel\">01</span>",
+      "css": ".ds-roundel{display:inline-grid;place-items:center;width:52px;height:52px;border:2px solid #141414;border-radius:50%;background:#fafaf7;color:#141414;font-family:'Big Shoulders Display Variable','Arial Narrow',sans-serif;font-weight:800;font-size:1.5rem;line-height:1}"
+    },
+    {
+      "name": "Advert slot",
+      "kind": "card",
+      "refersTo": "advert",
+      "description": "Programme advert, here a quarter page that is still available.",
+      "html": "<div class=\"ds-ad\"><span class=\"ds-ad-meta\">Quarter page</span><span class=\"ds-ad-title\">This space is available</span><span class=\"ds-ad-meta\">Silver</span></div>",
+      "css": ".ds-ad{display:flex;flex-direction:column;justify-content:space-between;gap:12px;min-height:150px;max-width:260px;padding:16px;border:1.5px solid #141414;background:#fafaf7;color:#141414}.ds-ad-meta{font-family:'Archivo Variable',Archivo,sans-serif;font-weight:600;font-stretch:75%;font-size:.875rem}.ds-ad-title{font-family:'Big Shoulders Display Variable','Arial Narrow',sans-serif;font-weight:800;font-size:1.75rem;text-transform:uppercase;line-height:.95}"
+    },
+    {
+      "name": "Form field",
+      "kind": "input",
+      "description": "Printed-form field with underline; highlighter focus.",
+      "html": "<label class=\"ds-field\"><span>Your name</span><input></label>",
+      "css": ".ds-field{display:grid;grid-template-columns:9rem 1fr;gap:12px;align-items:end;max-width:520px;padding:10px 16px;background:#fafaf7}.ds-field span{font-family:'Archivo Variable',Archivo,sans-serif;font-weight:600;font-stretch:75%;padding-bottom:8px;color:#141414}.ds-field input{min-height:44px;padding:8px 2px;border:0;border-bottom:1.5px solid #141414;border-radius:0;background:transparent;font:inherit;color:#141414}.ds-field input:focus{outline:none;background:rgba(250,212,67,.35)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Race-Day Programme",
+    "overview": "The site is the booklet you buy at a race meeting, made for the team's own season. A black cover carries the logo, then come numbered pages printed in two colours: black ink on newsprint-grey paper, and the logo's yellow as the single spot ink. Every page has a running head and a page number, and the contents list on the cover and back cover points at those numbers. Programme conventions organise the content: the team is an entry list with race-number roundels, the car is a technical page with keyed parts and a spec table, the season is a timetable, sponsors are adverts in real advert sizes, and the footer is the back cover with the imprint.\n\nDensity is that of print: ruled rows, tight condensed headings, generous space between spreads, and yellow used as solid floods, never as tint or glow. Photographs sit on a halftone screen until real ones arrive, each with a programme caption. Motion is press-like and sparse: a yellow page-turn sheet between pages, headings that roll on like ink, lists that print row by row, and a yellow ink-dot cursor.",
+    "keyCharacteristics": [
+      "Two inks and a paper. Black, spot yellow, newsprint grey.",
+      "Condensed display caps for every heading and numeral; a plain grotesque for reading.",
+      "Page numbers, running heads and contents leaders as working navigation.",
+      "Hairline and heavy rules instead of boxes, cards or shadows.",
+      "Square corners everywhere except the race-number roundel."
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "Only black and yellow ink exist. No third hue, no tints of yellow as backgrounds, no gradients between them.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flood Rule",
+        "body": "Yellow is printed as a solid area that owns a region (a panel, a band, a tab, a sheet). It is never a glow, an outline accent on paper, or a coloured word inside a black heading.",
+        "section": "colors"
+      },
+      {
+        "name": "The Logo On Black Rule",
+        "body": "The logo's car is white, so the mark only appears on press-black grounds: masthead, cover, back cover.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Tracked Caps Rule",
+        "body": "Small labels use Archivo's condensed width, not letter-spaced capitals or monospace.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "All numerals are tabular, so dates, times and results line up in columns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Press Rule",
+        "body": "Nothing floats. Depth is a heavier rule or a different stock, never a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** print yellow as solid floods that own a region: a panel, band, tab or sheet.",
+      "**Do** give every new page a running head, a page-number tab and an entry in the `pages` list so the contents and page-turn know it.",
+      "**Do** set headings, names and numerals in Big Shoulders Display 800 uppercase, and labels in Archivo at 75% width.",
+      "**Do** use ruled rows and ledger tables for lists of facts.",
+      "**Do** keep placeholders bracketed and italic in placeholder grey until the team supplies the real content.",
+      "**Do** keep content visible without JavaScript; reveals may hide content only under the `motion-ok` flag."
+    ],
+    "donts": [
+      "**Don't** add shadows, blur, glass, gradients or rounded cards.",
+      "**Don't** introduce a third colour or tint yellow into pale backgrounds.",
+      "**Don't** put the logo on newsprint or yellow; its white car disappears.",
+      "**Don't** add small labels above headings, letter-spaced capitals or monospace labels.",
+      "**Don't** invent names, results, times, sponsors or quotes; mark the gap instead."
+    ]
+  }
+}
