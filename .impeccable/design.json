@@ -292,6 +292,11 @@
         "section": "colors"
       },
       {
+        "name": "The Flip On Yellow Rule",
+        "body": "Anything that is yellow on paper or black (text selection, link hover, the cursor) turns black on yellow ground. Every yellow surface carries data-ink=\"spot\" so styles and the cursor can tell.",
+        "section": "colors"
+      },
+      {
         "name": "The No Tracked Caps Rule",
         "body": "Small labels use Archivo's condensed width, not letter-spaced capitals or monospace.",
         "section": "typography"

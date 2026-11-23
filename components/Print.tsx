@@ -29,7 +29,7 @@ export function PageHead({ href, title, children }: { href: string; title: React
           {title}
         </h1>
         {info && (
-          <span className="folio-tab" aria-label={`Page ${info.folio}`}>
+          <span className="folio-tab" data-ink="spot" aria-label={`Page ${info.folio}`}>
             {info.folio}
           </span>
         )}

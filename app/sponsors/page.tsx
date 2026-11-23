@@ -18,7 +18,7 @@ export default function SponsorsPage() {
         <div className="ads">
           {adTiers.flatMap((t) =>
             Array.from({ length: t.slots }, (_, i) => (
-              <div className={`ad ad--${t.span}`} key={`${t.level}-${i}`}>
+              <div className={`ad ad--${t.span}`} data-ink={t.span === "full" ? "spot" : undefined} key={`${t.level}-${i}`}>
                 <span className="ad__meta">{t.size}</span>
                 <span className="ad__title">{t.span === "eighth" ? "Available" : "This space is available"}</span>
                 <span className="ad__meta">{t.level}</span>

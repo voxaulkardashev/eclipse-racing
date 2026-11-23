@@ -3,9 +3,12 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A yellow ink-dot cursor that trails the pointer.
- * Over links it opens into a highlighter disc (multiply blend, so the text under it stays legible);
- * over elements with data-cursor="Label" it becomes an ink disc showing that label.
+ * A yellow ink-dot cursor that trails the pointer, drawn above everything.
+ * On paper: a yellow dot with a thin black ring; over links it opens into a highlighter disc
+ * (multiply blend, so the link text stays legible). On black: yellow, and a yellow ring over links.
+ * On yellow (data-ink="spot"): the dot turns black, and over links the disc inverts what is under
+ * it (difference blend: yellow turns black, black text turns yellow).
+ * Over elements with data-cursor="Label" it becomes an ink disc showing that label.
  *
  * Position and size are both eased every frame towards their targets, so entering, leaving and
  * switching states all glide and can be interrupted midway without a jump. Colour and label
@@ -81,10 +84,15 @@ export default function Cursor() {
       const labelled = node?.closest<HTMLElement>("[data-cursor]");
       const link = node?.closest("a, button, label[for], summary");
       const dark = node?.closest("[data-theme='dark']");
+      const spot = node?.closest("[data-ink='spot']");
+      // A yellow panel inside a black region (the cover's next-round panel) counts as yellow.
+      const onSpot = Boolean(spot) && (!dark || dark.contains(spot!));
+      const onDark = Boolean(dark) && !onSpot;
 
       const next: keyof typeof SIZE = labelled ? "label" : link ? "link" : "dot";
       el.classList.toggle("is-hidden", Boolean(field));
-      el.classList.toggle("is-dark", Boolean(dark));
+      el.classList.toggle("is-dark", onDark);
+      el.classList.toggle("is-spot", onSpot);
       el.classList.toggle("is-label", next === "label");
       el.classList.toggle("is-link", next === "link");
       // Keep the old label text while it fades out, so it doesn't vanish mid-fade.
