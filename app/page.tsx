@@ -22,9 +22,12 @@ export default function CoverPage() {
             <div>
               <Logo className="cover__logo" />
               <h1 id="cover-title" className="display cover__title">
-                Eclipse
-                <br />
-                Racing
+                <span className="cover__line">
+                  <span>Eclipse</span>
+                </span>
+                <span className="cover__line">
+                  <span>Racing</span>
+                </span>
               </h1>
               <p className="cover__sub">
                 {site.competition}. <Ph>{site.base}</Ph>

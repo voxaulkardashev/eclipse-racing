@@ -187,6 +187,11 @@
         "name": "lenis-glide",
         "value": "lerp 0.055, wheelMultiplier 1.15",
         "purpose": "Long momentum glide on wheel scroll; forced on for everyone for now."
+      },
+      {
+        "name": "intro",
+        "value": "anime.js draw 1150ms + fills 480ms; GSAP fly 0.95s power3.inOut, wipe 0.9s power4.inOut",
+        "purpose": "First-visit loading screen: logo drawn, flown onto the page logo, sheet wiped up; cover title rises."
       }
     ],
     "breakpoints": [
