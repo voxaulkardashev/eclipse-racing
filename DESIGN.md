@@ -203,9 +203,9 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Page turn:** on internal navigation a spot-yellow sheet wipes in from the right (520ms, cubic-bezier(0.16, 1, 0.3, 1)) showing the destination's page number and section, the route changes beneath it, and it leaves to the left (460ms).
 - **Ink roll:** spread and page headings reveal left to right with a clip-path (800ms) when scrolled into view.
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
-- **Cursor:** a spot-yellow dot trailing the pointer (eased at 0.2 per frame), multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Shown whenever a mouse or trackpad is present, touchscreen laptops included.
-- **Scroll:** Lenis smooth scrolling.
-- **Reduced motion:** no page turn and no reveals; everything is visible immediately. The cursor stays but follows the pointer instantly. Lenis is currently forced on for everyone at the team's request (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component); set it to false to respect the setting again.
+- **Cursor:** a spot-yellow dot trailing the pointer, multiplied onto paper. It opens into a highlighter disc over links, becomes a black disc with a label (such as "View") over marked images, and draws as a yellow ring on black. Position and size are both eased every frame (follow 0.16, grow 0.14), so hovering in, out and between states glides and can be interrupted; colour, ring and label cross-fade (320ms, label fades in after the disc opens). Shown whenever a mouse or trackpad is present, touchscreen laptops included.
+- **Scroll:** Lenis smooth scrolling with a long glide (lerp 0.055, wheel multiplier 1.15).
+- **Reduced motion:** no page turn and no reveals; everything is visible immediately. At the team's request the cursor keeps its easing and Lenis is forced on (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component, which also stops Lenis's own reduced-motion check); set the flag to false to respect the setting again.
 
 ## Do's and Don'ts
 

@@ -180,8 +180,13 @@
       },
       {
         "name": "cursor-follow",
-        "value": "lerp 0.2 per frame",
-        "purpose": "Ink-dot cursor easing; 1 (instant) under reduced motion."
+        "value": "follow 0.16, grow 0.14 per frame",
+        "purpose": "Ink-dot cursor position and size easing, for everyone (team request)."
+      },
+      {
+        "name": "lenis-glide",
+        "value": "lerp 0.055, wheelMultiplier 1.15",
+        "purpose": "Long momentum glide on wheel scroll; forced on for everyone for now."
       }
     ],
     "breakpoints": [
