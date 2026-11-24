@@ -54,6 +54,18 @@ node scripts/knock-hash.mjs "<name>" "<email>" "<about>" "<message>"
 
 Paste the printed `KNOCK_HASH` into `lib/knock.ts`, and rename the sign-in page's folder in `app/` to the printed folder name. "About" must be one of the dropdown options. This hides the door; it isn't security. The real protection will be the accounts themselves.
 
+### Demo sign-in and team overview
+
+The sign-in page accepts one demo account (ask the Team Manager for its details). Signing in turns the page to the team overview: next round countdown, a task board you can move tasks along, milestones, news drafts and a sponsor tracker, all example data that isn't saved. Like the sign-in page, the overview lives in a folder whose name is worked out from the account details, so it isn't written anywhere in the site's code, and it shows "Page missing" to anyone who hasn't signed in this browser session. **Sign out** turns back to the cover.
+
+Only a fingerprint of the demo email and password is stored (`lib/demoLogin.ts`). To change them:
+
+```bash
+node scripts/login-hash.mjs "<email>" "<password>"
+```
+
+Paste the printed `DEMO_LOGIN_HASH` into `lib/demoLogin.ts` and rename the overview's folder in `app/` to the printed folder name. Real accounts will replace all of this.
+
 ## Deployment
 
 Each push to `main` builds the site and publishes it to GitHub Pages using `.github/workflows/deploy-pages.yml`. Pull requests into `main` only check that the site builds.

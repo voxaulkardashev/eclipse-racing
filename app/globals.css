@@ -1167,6 +1167,167 @@ a:hover {
   min-height: 60vh;
 }
 
+/* ---------- Team overview (hidden, demo) ---------- */
+.ov {
+  padding-bottom: var(--space-section);
+}
+
+.ov .page-head__title {
+  align-items: center;
+}
+
+.ov-demo {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 6px 10px;
+  background: var(--spot);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.ov-top {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.ov-count {
+  margin: 0 0 16px;
+  font-stretch: 85%;
+  font-weight: 600;
+}
+
+.ov-count .display {
+  font-size: 4rem;
+  line-height: 0.85;
+  margin-right: 6px;
+}
+
+.ov-h3 {
+  font-size: 2.25rem;
+  padding-bottom: 10px;
+  border-bottom: 5px solid var(--ink);
+  margin-bottom: 0;
+}
+
+.ov-meta {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+.ov-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ov-rows li {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  gap: 4px 16px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.ov-rows .rows__key {
+  font-stretch: 75%;
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .ov-rows li {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ov-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.ov-col__h {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.ov-col__n {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+
+.ov-tasks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ov-task {
+  display: grid;
+  gap: 4px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.ov-task__title {
+  font-weight: 600;
+}
+
+.ov-task--done .ov-task__title {
+  text-decoration: line-through;
+  color: var(--ink-2);
+}
+
+.ov-move {
+  justify-self: start;
+  margin-top: 4px;
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-stretch: 75%;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.ov-move:hover {
+  background: var(--spot);
+}
+
+.ov-empty {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  color: var(--ink-2);
+}
+
+.ov-pair {
+  margin-top: var(--space-section);
+}
+
+.ov-pair .spread-head__h2 {
+  font-size: clamp(2.25rem, 4vw, 3rem);
+}
+
+@media (max-width: 860px) {
+  .ov-top,
+  .ov-board {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Back cover ---------- */
 .back-cover {
   margin-top: var(--space-section);
