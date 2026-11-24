@@ -116,7 +116,7 @@ Two-colour offset print: one ink, one spot colour, one paper stock.
 ### Neutral
 - **Press Black** (#141414): all text and rules on paper; the ground of the cover, masthead and back cover.
 - **Newsprint** (#edede8): the page ground. Neutral grey, deliberately not cream.
-- **Newsprint Shade** (#e1e1db): the halftone plate behind photo slots and the scrollbar track.
+- **Newsprint Shade** (#e1e1db): the halftone plate behind photo slots.
 - **Sheet White** (#fafaf7): a brighter stock for adverts, the message form and roundel fills, so they read as inserted sheets.
 - **Ink Grey** (#4a4a45): secondary text and photo captions on paper.
 - **Placeholder Grey** (#5c5c57): bracketed placeholder copy, italic, at 6:1 on newsprint.
@@ -208,7 +208,8 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
 - **Cursor:** drawn above everything, and its colour adapts per pixel. Every frame its 80px box is split into paper, black and yellow regions (in stacking order: masthead and overlays, then yellow, then black, then paper) and one layer is clipped to each. Paper: a spot-yellow dot with a 1px black ring, opening into a highlighter over links (multiply, so link text stays legible), and a black disc with a label ("View") over marked images. Black (`data-theme="dark"`) and yellow (`data-ink="spot"`, a paper link's yellow hover highlight, the page-turn sheet while it moves): a yellow disc in difference blend, so it shows yellow over black, black over anything yellow (logo, page numbers, panels, highlights) and turns black text yellow; on black, links get a yellow ring instead. Over pure white on black (the logo's car, white text) the inversion reads blue. Position and size are eased every frame (follow 0.16, grow 0.14), so hovering in, out and between states glides and can be interrupted; colour, ring and label cross-fade (320ms). Shown whenever a mouse or trackpad is present, touchscreen laptops included.
 - **Scroll:** Lenis smooth scrolling with a long glide (lerp 0.055, wheel multiplier 1.15).
-- **Reduced motion:** no page turn and no reveals; everything is visible immediately. At the team's request the cursor keeps its easing and Lenis is forced on (`FORCE_SMOOTH_SCROLL` in the smooth-scroll component, which also stops Lenis's own reduced-motion check); set the flag to false to respect the setting again.
+- **Reduced motion:** every animation plays for everyone, including devices set to reduce motion (team request). One switch, `RESPECT_REDUCED_MOTION` in `lib/motion.ts`, turns the setting back on site-wide: Lenis and the page-turn off, the loading sheet fading instead of wiping, reveals skipped and CSS transitions stilled (the cursor keeps easing either way).
+- **Scrollbars:** hidden site-wide (`scrollbar-width: none`, `::-webkit-scrollbar`); scrolling works by wheel, touch and keys.
 
 ## Do's and Don'ts
 

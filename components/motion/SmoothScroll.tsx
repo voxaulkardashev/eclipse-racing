@@ -3,6 +3,7 @@
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { useEffect } from "react";
+import { RESPECT_REDUCED_MOTION, reducedMotion } from "@/lib/motion";
 
 declare global {
   interface Window {
@@ -10,14 +11,10 @@ declare global {
   }
 }
 
-// Temporary: the team asked for Lenis to run for everyone, even with "reduce motion" on
-// (Windows: Animation effects off). Set to false to respect that setting again.
-const FORCE_SMOOTH_SCROLL = true;
-
 /** Lenis smooth scrolling. */
 export default function SmoothScroll() {
   useEffect(() => {
-    if (!FORCE_SMOOTH_SCROLL && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (reducedMotion()) return;
 
     const lenis = new Lenis({
       autoRaf: true,
@@ -26,8 +23,8 @@ export default function SmoothScroll() {
       lerp: 0.055,
       wheelMultiplier: 1.15,
       stopInertiaOnNavigate: true,
-      // Lenis also checks reduce-motion itself and would scroll 1:1; honour the flag above instead.
-      respectReducedMotion: !FORCE_SMOOTH_SCROLL,
+      // Lenis also checks reduce-motion itself and would scroll 1:1; follow the site-wide switch instead.
+      respectReducedMotion: RESPECT_REDUCED_MOTION,
     });
     window.__lenis = lenis;
 

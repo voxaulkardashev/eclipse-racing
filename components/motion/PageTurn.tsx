@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { pageFor, type PageInfo } from "@/lib/site";
+import { reducedMotion } from "@/lib/motion";
 import { scrollToTop } from "./SmoothScroll";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -13,7 +14,8 @@ const REVEAL_MS = 460;
 /**
  * Page-turn transition: on an internal link click a yellow spot-ink sheet sweeps in from the
  * right showing the destination's page number and section, the route changes underneath, then
- * the sheet leaves to the left. Back/forward and reduced motion navigate without it.
+ * the sheet leaves to the left. Back/forward navigate without it (and reduced motion, when the
+ * site-wide switch in lib/motion.ts respects it).
  */
 export default function PageTurn() {
   const router = useRouter();
@@ -24,10 +26,8 @@ export default function PageTurn() {
 
   // Intercept internal link clicks before Next's <Link> handles them.
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
     const onClick = (e: MouseEvent) => {
-      if (reduced.matches || e.defaultPrevented || e.button !== 0) return;
+      if (reducedMotion() || e.defaultPrevented || e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
       const a = (e.target as Element).closest("a");

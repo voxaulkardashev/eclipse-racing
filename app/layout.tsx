@@ -9,6 +9,7 @@ import Cursor from "@/components/motion/Cursor";
 import PageTurn from "@/components/motion/PageTurn";
 import Reveal from "@/components/motion/Reveal";
 import Intro from "@/components/motion/Intro";
+import { RESPECT_REDUCED_MOTION } from "@/lib/motion";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://eclipseracing.co.uk"),
@@ -26,7 +27,7 @@ export const viewport: Viewport = {
 // Runs before paint: marks whether motion is allowed so reveals can start hidden without a flash,
 // while pages without JavaScript stay fully visible. Also shows the loading screen on the first
 // page of a browser session, with a 7s safety net so it can never block the page.
-const bootScript = `(function(){var d=document.documentElement;d.classList.add(window.matchMedia('(prefers-reduced-motion: reduce)').matches?'motion-reduce':'motion-ok');try{if(!sessionStorage.getItem('er-intro')){d.classList.add('intro');setTimeout(function(){d.classList.remove('intro')},7000)}}catch(e){}})()`;
+const bootScript = `(function(){var d=document.documentElement;d.classList.add(${RESPECT_REDUCED_MOTION}&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'motion-reduce':'motion-ok');try{if(!sessionStorage.getItem('er-intro')){d.classList.add('intro');setTimeout(function(){d.classList.remove('intro')},7000)}}catch(e){}})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
