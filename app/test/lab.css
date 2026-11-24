@@ -1,0 +1,227 @@
+/* Test lab (beta). Everything here is scoped to .lab and only loads on /test/. */
+
+/* Swap the header face inside the lab. Missing glyphs (digits, punctuation) fall back to the
+   current face through the font stack. */
+.lab--eclipse .display,
+.lab--eclipse .entry__name,
+.lab--eclipse .bulletin__title,
+.lab--eclipse .ad__title,
+.lab--eclipse .back-cover__h,
+.lab--eclipse .lab-intro__h {
+  font-family: var(--font-eclipse), "Big Shoulders Display Variable", sans-serif;
+  font-weight: 400;
+  letter-spacing: var(--lab-tracking);
+  text-transform: uppercase;
+}
+
+/* Size lives on an inner block so each heading keeps its own size and the lab scales it; being a
+   block, its line height follows its own (scaled) size rather than the heading's. */
+.lab-fit {
+  display: block;
+  font-size: calc(var(--lab-scale, 1) * 1em);
+}
+
+.lab-fit--small {
+  font-size: calc(var(--lab-scale-small, 1) * 1em);
+}
+
+.lab--eclipse .lab-fit {
+  line-height: 1;
+}
+
+.lab-intro {
+  padding-bottom: 32px;
+}
+
+.lab-intro__h {
+  margin: 48px 0 12px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.lab-intro__p {
+  max-width: 40em;
+  font-size: 1.125rem;
+}
+
+/* Controls bar: on desktop it sticks under the masthead while you scroll through the samples.
+   On phones it stacks tall, so it stays in place instead of covering the screen. */
+.lab-controls {
+  position: relative;
+  z-index: 40;
+  background: var(--sheet);
+  border-top: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+}
+
+@media (min-width: 761px) {
+  .lab-controls {
+    position: sticky;
+    top: var(--mast);
+  }
+}
+
+.lab-controls__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 16px 32px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.lab-field {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 180px;
+  font-stretch: 75%;
+  font-weight: 600;
+}
+
+.lab-field legend {
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.lab-field output {
+  font-family: var(--display);
+  font-weight: 800;
+  margin-left: 6px;
+}
+
+.lab-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--ink);
+}
+
+.lab-segment {
+  display: inline-flex;
+  border: 1.5px solid var(--ink);
+}
+
+.lab-segment button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.lab-segment button + button {
+  border-left: 1.5px solid var(--ink);
+}
+
+.lab-segment button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--spot);
+}
+
+/* Specimen */
+.lab-specimen {
+  padding-top: clamp(48px, 7vw, 88px);
+  padding-bottom: clamp(48px, 7vw, 88px);
+}
+
+.lab-specimen--paper {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.lab-specimen--dark {
+  background: var(--cover);
+  color: var(--cover-text);
+}
+
+.lab-specimen--spot {
+  background: var(--spot);
+  color: var(--ink);
+}
+
+.lab-specimen__big {
+  font-size: clamp(4rem, 13vw, 10rem);
+  line-height: 0.9;
+  margin-bottom: 28px;
+}
+
+.lab-specimen--paper .lab-specimen__abc,
+.lab-specimen--dark .lab-specimen__abc {
+  color: var(--spot);
+}
+
+.lab-specimen--paper .lab-specimen__abc {
+  color: var(--ink);
+}
+
+.lab-specimen__abc {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 1;
+  overflow-wrap: anywhere;
+  margin-bottom: 24px;
+}
+
+.lab-note {
+  max-width: 44em;
+  font-size: 0.9375rem;
+  opacity: 0.8;
+}
+
+/* Samples */
+.lab-block {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+
+.lab-cover {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: end;
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(40px, 6vw, 72px);
+}
+
+@media (max-width: 860px) {
+  .lab-cover {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lab-band {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+
+.lab-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+@media (max-width: 760px) {
+  .lab-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lab-ad {
+  min-height: 200px;
+}
+
+.lab-back {
+  margin-top: clamp(48px, 7vw, 88px);
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+/* The back cover footer follows straight after; no double gap. */
+.lab-back + * {
+  margin-top: 0;
+}
