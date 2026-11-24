@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { CAR, LOGO_VIEWBOX, STAR_AND_CRESCENT } from "@/components/Logo";
 import { site } from "@/lib/site";
+import { reducedMotion } from "@/lib/motion";
 
 /**
  * First-visit loading screen (once per browser session).
@@ -14,7 +15,8 @@ import { site } from "@/lib/site";
  *
  * The sheet is only shown while <html> has .intro, which an inline script sets before paint
  * (and clears after 7s regardless), so the page is never blocked if scripts fail.
- * With reduce motion on, the logo still draws but the sheet fades instead of wiping.
+ * When the site-wide switch in lib/motion.ts respects reduce motion and the device asks for it,
+ * the logo still draws but the sheet fades instead of wiping.
  */
 export default function Intro() {
   const ref = useRef<HTMLDivElement>(null);
@@ -24,7 +26,7 @@ export default function Intro() {
     const el = ref.current;
     if (!el || !html.classList.contains("intro")) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = reducedMotion();
     let cancelled = false;
     window.__lenis?.stop();
 

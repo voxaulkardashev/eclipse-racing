@@ -38,8 +38,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scrollbar-color: var(--ink) var(--paper-2);
-  scrollbar-width: thin;
+  /* Scrollbars are hidden site-wide (team request); scrolling still works by wheel, touch and keys. */
+  scrollbar-width: none;
 }
 
 body {
@@ -108,6 +108,12 @@ a:hover {
 ::selection {
   background: var(--spot);
   color: var(--ink);
+}
+
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .container {
@@ -1457,12 +1463,11 @@ main > :last-child.band {
   transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  /* The cursor keeps its easing at the team's request; everything else goes still. */
-  *:not(.cursor-layer, .cursor-layer *),
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-  }
+/* Reduced motion is a class the boot script sets only when RESPECT_REDUCED_MOTION (lib/motion.ts)
+   is on and the device asks for it. The cursor keeps its easing either way. */
+.motion-reduce *:not(.cursor-layer, .cursor-layer *),
+.motion-reduce *::before,
+.motion-reduce *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
 }
