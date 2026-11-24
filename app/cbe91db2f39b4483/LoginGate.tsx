@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DoubleRule } from "@/components/Print";
 import { KNOCK_FLAG } from "@/lib/knock";
+import { MEMBER_FLAG, signIn } from "@/lib/demoLogin";
+import { requestPageTurn } from "@/components/motion/PageTurn";
 import NotFound from "../not-found";
 
 /**
@@ -30,16 +32,39 @@ export default function LoginGate() {
 }
 
 function SignIn() {
-  const [note, setNote] = useState("Accounts aren't connected yet. This is the front end only.");
+  const [note, setNote] = useState("Sign in with your team account.");
+  const [error, setError] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // Front-end demo: checks the one demo account (lib/demoLogin.ts); nothing is sent anywhere.
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    if (!String(data.get("email") ?? "").trim() || !String(data.get("password") ?? "")) {
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const email = String(data.get("email") ?? "");
+    const password = String(data.get("password") ?? "");
+    if (!email.trim() || !password) {
+      setError(true);
       setNote("Please enter your email and password.");
       return;
     }
-    setNote("Accounts aren't connected yet, so you can't sign in. Nothing was sent.");
+    setBusy(true);
+    const overview = await signIn(email, password);
+    setBusy(false);
+    if (!overview) {
+      setError(true);
+      setNote("That email and password don't match a team account.");
+      return;
+    }
+    try {
+      sessionStorage.setItem(MEMBER_FLAG, "demo");
+    } catch {
+      /* storage blocked: the overview will show "page missing" */
+    }
+    form.reset();
+    setError(false);
+    setNote("Signed in.");
+    requestPageTurn(overview, { folio: "00", section: "Overview" });
   };
 
   return (
@@ -75,11 +100,16 @@ function SignIn() {
               <label htmlFor="login-password">Password</label>
               <input id="login-password" name="password" type="password" autoComplete="current-password" />
             </div>
-            <p id="login-status" className="form__note" role="status" aria-live="polite">
+            <p
+              id="login-status"
+              className={`form__note ${error ? "form__note--error" : ""}`}
+              role="status"
+              aria-live="polite"
+            >
               {note}
             </p>
             <div>
-              <button type="submit" className="button">
+              <button type="submit" className="button" disabled={busy}>
                 Sign in
               </button>
             </div>

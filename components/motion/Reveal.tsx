@@ -17,15 +17,6 @@ export default function Reveal() {
     const root = document.documentElement;
     if (!root.classList.contains("motion-ok")) return;
 
-    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)"));
-    items.forEach((el) => {
-      if (el.dataset.reveal === "rows") {
-        Array.from(el.children).forEach((child, i) => {
-          (child as HTMLElement).style.setProperty("--i", String(Math.min(i, 8)));
-        });
-      }
-    });
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -38,9 +29,31 @@ export default function Reveal() {
       // threshold 0: a clip-path-hidden heading reports an intersection ratio of 0 in Chrome.
       { rootMargin: "0px 0px -8% 0px", threshold: 0 },
     );
-    items.forEach((el) => io.observe(el));
 
-    return () => io.disconnect();
+    const seen = new WeakSet<Element>();
+    const scan = () => {
+      document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-in)").forEach((el) => {
+        if (seen.has(el)) return;
+        seen.add(el);
+        if (el.dataset.reveal === "rows") {
+          Array.from(el.children).forEach((child, i) => {
+            (child as HTMLElement).style.setProperty("--i", String(Math.min(i, 8)));
+          });
+        }
+        io.observe(el);
+      });
+    };
+    scan();
+
+    // Content that appears after the page loads (pages that render after a check, such as the
+    // team area) gets the same reveals.
+    const mo = new MutationObserver(scan);
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, [pathname]);
 
   return null;
