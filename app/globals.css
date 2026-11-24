@@ -1205,115 +1205,13 @@ main > :last-child.band {
   cursor: default !important;
 }
 
-.cursor {
+/* Three layers of the same disc, each clipped by the script to its own ground under the cursor
+   (paper, black, yellow), so the cursor's colour adapts per pixel across every edge. */
+.cursor-layer {
   position: fixed;
   left: 0;
   top: 0;
   z-index: 2147483647; /* above everything, the loading screen included */
-  pointer-events: none;
-  opacity: 0;
-  mix-blend-mode: normal;
-  transition: opacity 300ms var(--ease);
-}
-
-.cursor.is-visible {
-  opacity: 1;
-}
-
-.cursor.is-hidden {
-  opacity: 0;
-}
-
-/* Size (scale) is eased per frame by the script; colour, ring and blend cross-fade here.
-   The resting dot carries a black ring (4px at scale 0.25 = 1px) so it reads on grey paper. */
-.cursor__disc {
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
-  border-radius: 50%;
-  background-color: var(--spot);
-  box-shadow: inset 0 0 0 4px var(--ink);
-  transform: scale(0.25);
-  will-change: transform;
-  transition:
-    background-color 320ms var(--ease),
-    box-shadow 320ms var(--ease);
-}
-
-/* The label fades out quickly, and fades in once the disc has mostly opened. */
-.cursor__label {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 0.9375rem;
-  text-transform: uppercase;
-  color: var(--spot);
-  opacity: 0;
-  transform: scale(0.7);
-  transition:
-    opacity 140ms var(--ease),
-    transform 200ms var(--ease),
-    color 200ms var(--ease);
-}
-
-/* Paper, over links: an open highlighter. Multiply keeps the link text legible through it. */
-.cursor.is-link {
-  mix-blend-mode: multiply;
-}
-
-.cursor.is-link .cursor__disc {
-  box-shadow: inset 0 0 0 0 var(--ink);
-}
-
-/* Over labelled elements: an ink disc carrying the label */
-.cursor.is-label {
-  mix-blend-mode: normal;
-}
-
-.cursor.is-label .cursor__disc {
-  background-color: var(--ink);
-  box-shadow: inset 0 0 0 0 var(--ink);
-}
-
-.cursor.is-label .cursor__label {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 260ms var(--ease) 90ms,
-    transform 420ms var(--ease) 60ms,
-    color 200ms var(--ease);
-}
-
-/* On black: plain yellow dot; over links a yellow ring. */
-.cursor.is-dark {
-  mix-blend-mode: normal;
-}
-
-.cursor.is-dark .cursor__disc {
-  box-shadow: inset 0 0 0 0 var(--spot);
-}
-
-.cursor.is-dark.is-link .cursor__disc {
-  background-color: rgba(250, 212, 67, 0);
-  box-shadow: inset 0 0 0 2px var(--spot);
-}
-
-.cursor.is-dark.is-label .cursor__disc {
-  background-color: var(--spot);
-}
-
-.cursor.is-dark.is-label .cursor__label {
-  color: var(--ink);
-}
-
-/* Spot layer: the same disc in black, clipped by the script to exactly the parts of the cursor
-   over yellow ground. Over links it inverts instead (yellow turns black, black text turns yellow). */
-.cursor-spot {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 2147483647;
   width: 80px;
   height: 80px;
   pointer-events: none;
@@ -1322,34 +1220,92 @@ main > :last-child.band {
   transition: opacity 300ms var(--ease);
 }
 
-.cursor-spot.is-visible {
+.cursor-layer.is-visible {
   opacity: 1;
 }
 
-.cursor-spot.is-hidden,
-.cursor-spot.is-label {
+.cursor-layer.is-hidden {
   opacity: 0;
 }
 
-.cursor-spot__disc {
+/* Size (scale) is eased per frame by the script; colour, ring and label cross-fade here. */
+.cursor-layer__disc {
   position: absolute;
   left: 12px;
   top: 12px;
+  display: grid;
+  place-items: center;
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: var(--ink);
-  transform: scale(0.26);
+  background-color: var(--spot);
+  box-shadow: inset 0 0 0 0 var(--ink);
+  transform: scale(0.25);
   will-change: transform;
-  transition: background-color 320ms var(--ease);
+  transition:
+    background-color 320ms var(--ease),
+    box-shadow 320ms var(--ease);
 }
 
-.cursor-spot.is-link {
+/* The label fades out quickly, and fades in once the disc has mostly opened. */
+.cursor-layer__label {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0;
+  transform: scale(0.7);
+  transition:
+    opacity 140ms var(--ease),
+    transform 200ms var(--ease),
+    color 200ms var(--ease);
+}
+
+.cursor-layer.is-label .cursor-layer__label {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 260ms var(--ease) 90ms,
+    transform 420ms var(--ease) 60ms,
+    color 200ms var(--ease);
+}
+
+/* Paper: a yellow dot with a thin black ring (4px at scale 0.25 = 1px); over links an open
+   highlighter that multiplies, so link text stays legible; over labelled photos an ink disc. */
+.cursor-layer--paper .cursor-layer__disc {
+  box-shadow: inset 0 0 0 4px var(--ink);
+}
+
+.cursor-layer--paper.is-link {
+  mix-blend-mode: multiply;
+}
+
+.cursor-layer--paper.is-link .cursor-layer__disc {
+  box-shadow: inset 0 0 0 0 var(--ink);
+}
+
+.cursor-layer--paper.is-label .cursor-layer__disc {
+  background-color: var(--ink);
+  box-shadow: inset 0 0 0 0 var(--ink);
+}
+
+.cursor-layer--paper .cursor-layer__label {
+  color: var(--spot);
+}
+
+/* Black and yellow ground: a yellow disc in difference blend. Over black it shows yellow; over
+   anything yellow (the logo, page numbers, panels, highlights) it shows black; black text on
+   yellow turns yellow. */
+.cursor-layer--dark,
+.cursor-layer--spot {
   mix-blend-mode: difference;
 }
 
-.cursor-spot.is-link .cursor-spot__disc {
-  background-color: var(--spot);
+/* On black, links get a yellow ring so their light text stays readable inside it. */
+.cursor-layer--dark.is-link .cursor-layer__disc {
+  background-color: rgba(250, 212, 67, 0);
+  box-shadow: inset 0 0 0 2px var(--spot);
 }
 
 /* First-visit loading screen: the logo is drawn, then the sheet wipes up */
@@ -1503,7 +1459,7 @@ main > :last-child.band {
 
 @media (prefers-reduced-motion: reduce) {
   /* The cursor keeps its easing at the team's request; everything else goes still. */
-  *:not(.cursor, .cursor *, .cursor-spot, .cursor-spot *),
+  *:not(.cursor-layer, .cursor-layer *),
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
