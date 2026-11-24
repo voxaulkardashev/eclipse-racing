@@ -42,15 +42,17 @@ To replace a placeholder, swap `<Photo caption="…" />` for a real `<img>`, and
 
 ## Team sign-in (hidden)
 
-The contact form doubles as a discreet way into the team sign-in page at `/login/`. Filling in all four fields (name, email, about, message) with the team's combination and pressing **Send message** opens it; any other message gets the normal "not connected yet" reply. Opening `/login/` directly shows "Page missing". The sign-in page is front end only until accounts exist.
+The contact form doubles as a discreet way into the team sign-in page. Filling in all four fields (name, email, about, message) with the team's combination and pressing **Send message** turns the page to it, with the usual yellow page-turn; any other message gets the normal "not connected yet" reply. The sign-in page is front end only until accounts exist.
 
-Only a SHA-256 fingerprint of the combination is stored (`lib/knock.ts`), never the words. Capitals and extra spaces don't matter. To change it:
+The sign-in page lives in a folder with a meaningless 16-character name under `app/`. The browser works that name out from the combination, so the address isn't written anywhere in the site's code; opening it directly, without the form, shows "Page missing". Only a SHA-256 fingerprint of the combination is stored (`lib/knock.ts`), never the words. Capitals and extra spaces don't matter.
+
+To change the combination:
 
 ```bash
 node scripts/knock-hash.mjs "<name>" "<email>" "<about>" "<message>"
 ```
 
-and paste the printed value into `KNOCK_HASH`. "About" must be one of the dropdown options. This hides the door; it isn't security. The real protection will be the accounts themselves.
+Paste the printed `KNOCK_HASH` into `lib/knock.ts`, and rename the sign-in page's folder in `app/` to the printed folder name. "About" must be one of the dropdown options. This hides the door; it isn't security. The real protection will be the accounts themselves.
 
 ## Deployment
 

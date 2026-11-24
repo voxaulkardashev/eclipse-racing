@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { isKnock, KNOCK_FLAG } from "@/lib/knock";
+import { openDoor, KNOCK_FLAG } from "@/lib/knock";
+import { requestPageTurn } from "@/components/motion/PageTurn";
 import { site } from "@/lib/site";
 
 type Status = { kind: "idle" | "sent" | "error"; text: string };
@@ -12,10 +12,10 @@ const IDLE: Status = { kind: "idle", text: "Messages aren't connected yet. Until
 /**
  * The contact form. It isn't connected to a mail service yet, so a normal message gets a polite
  * "please email us" reply. It also doubles as the team's discreet way in: the right combination
- * of all four fields opens the login page (see lib/knock.ts). Nothing on the page hints at it.
+ * of all four fields opens the team sign-in page, whose address is worked out from the
+ * combination (see lib/knock.ts). Nothing on the page hints at it.
  */
 export default function ContactForm() {
-  const router = useRouter();
   const [status, setStatus] = useState<Status>(IDLE);
   const [busy, setBusy] = useState(false);
 
@@ -26,10 +26,10 @@ export default function ContactForm() {
     const fields = ["name", "email", "topic", "message"].map((k) => String(data.get(k) ?? ""));
 
     setBusy(true);
-    const knock = await isKnock(fields);
+    const door = await openDoor(fields);
     setBusy(false);
 
-    if (knock) {
+    if (door) {
       try {
         sessionStorage.setItem(KNOCK_FLAG, "1");
       } catch {
@@ -37,7 +37,8 @@ export default function ContactForm() {
       }
       form.reset();
       setStatus(IDLE);
-      router.push("/login/");
+      // The same yellow page-turn as the rest of the site, labelled as the page before the cover.
+      requestPageTurn(door, { folio: "00", section: "Team area" });
       return;
     }
 

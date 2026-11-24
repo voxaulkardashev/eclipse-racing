@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { pageFor, type PageInfo } from "@/lib/site";
+import { pageFor } from "@/lib/site";
 import { reducedMotion } from "@/lib/motion";
 import { scrollToTop } from "./SmoothScroll";
 
@@ -16,16 +16,44 @@ const REVEAL_MS = 460;
  * right showing the destination's page number and section, the route changes underneath, then
  * the sheet leaves to the left. Back/forward navigate without it (and reduced motion, when the
  * site-wide switch in lib/motion.ts respects it).
+ *
+ * Code can request the same turn for a page that isn't a link (the contact form opening the
+ * team sign-in) with requestPageTurn().
  */
+
+type TurnInfo = { folio: string; section: string };
+const TURN_EVENT = "er:page-turn";
+
+/** Turn to `path` (without the base path) with the yellow sheet, labelled with `info`. */
+export function requestPageTurn(path: string, info: TurnInfo) {
+  window.dispatchEvent(new CustomEvent(TURN_EVENT, { detail: { path, info } }));
+}
 export default function PageTurn() {
   const router = useRouter();
   const pathname = usePathname();
   const sheet = useRef<HTMLDivElement>(null);
   const turning = useRef(false);
-  const [dest, setDest] = useState<PageInfo | undefined>();
+  const [dest, setDest] = useState<TurnInfo | undefined>();
 
-  // Intercept internal link clicks before Next's <Link> handles them.
   useEffect(() => {
+    // Cover the page with the sheet, then change route underneath it.
+    const turn = (path: string, info: TurnInfo) => {
+      if (turning.current || !sheet.current) return false;
+      if (reducedMotion()) {
+        router.push(path);
+        return true;
+      }
+      turning.current = true;
+      setDest(info);
+      const anim = sheet.current.animate(
+        [{ clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)" }],
+        { duration: COVER_MS, easing: EASE, fill: "forwards" },
+      );
+      anim.onfinish = () => router.push(path);
+      return true;
+    };
+
+    // Intercept internal link clicks before Next's <Link> handles them.
     const onClick = (e: MouseEvent) => {
       if (reducedMotion() || e.defaultPrevented || e.button !== 0) return;
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -45,18 +73,20 @@ export default function PageTurn() {
       if (!info || turning.current || !sheet.current) return;
 
       e.preventDefault();
-      turning.current = true;
-      setDest(info);
+      turn(path + url.search + url.hash, info);
+    };
 
-      const anim = sheet.current.animate(
-        [{ clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)" }],
-        { duration: COVER_MS, easing: EASE, fill: "forwards" },
-      );
-      anim.onfinish = () => router.push(path + url.search + url.hash);
+    const onRequest = (e: Event) => {
+      const { path, info } = (e as CustomEvent<{ path: string; info: TurnInfo }>).detail;
+      if (!turn(path, info)) router.push(path);
     };
 
     document.addEventListener("click", onClick, true);
-    return () => document.removeEventListener("click", onClick, true);
+    window.addEventListener(TURN_EVENT, onRequest);
+    return () => {
+      document.removeEventListener("click", onClick, true);
+      window.removeEventListener(TURN_EVENT, onRequest);
+    };
   }, [router]);
 
   // Once the new route has rendered under the sheet, reveal it.
