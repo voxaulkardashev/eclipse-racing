@@ -40,6 +40,18 @@ Then open http://localhost:3000.
 
 To replace a placeholder, swap `<Photo caption="…" />` for a real `<img>`, and `<Ph>…</Ph>` for real text. News posts are listed in `lib/site.ts` for now.
 
+## Team sign-in (hidden)
+
+The contact form doubles as a discreet way into the team sign-in page at `/login/`. Filling in all four fields (name, email, about, message) with the team's combination and pressing **Send message** opens it; any other message gets the normal "not connected yet" reply. Opening `/login/` directly shows "Page missing". The sign-in page is front end only until accounts exist.
+
+Only a SHA-256 fingerprint of the combination is stored (`lib/knock.ts`), never the words. Capitals and extra spaces don't matter. To change it:
+
+```bash
+node scripts/knock-hash.mjs "<name>" "<email>" "<about>" "<message>"
+```
+
+and paste the printed value into `KNOCK_HASH`. "About" must be one of the dropdown options. This hides the door; it isn't security. The real protection will be the accounts themselves.
+
 ## Deployment
 
 Each push to `main` builds the site and publishes it to GitHub Pages using `.github/workflows/deploy-pages.yml`. Pull requests into `main` only check that the site builds.
