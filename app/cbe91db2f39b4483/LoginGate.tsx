@@ -8,7 +8,7 @@ import NotFound from "../not-found";
 
 /**
  * Shows the sign-in form only to someone who came through the contact form's combination this
- * session; anyone opening /login/ directly sees the ordinary "page missing" page. Nothing is
+ * session; anyone opening its address directly sees the ordinary "page missing" page. Nothing is
  * rendered into the static HTML, so the form isn't in the page source either.
  */
 export default function LoginGate() {
