@@ -9,7 +9,6 @@ import Cursor from "@/components/motion/Cursor";
 import PageTurn from "@/components/motion/PageTurn";
 import Reveal from "@/components/motion/Reveal";
 import Intro from "@/components/motion/Intro";
-import ScrollProgress from "@/components/motion/ScrollProgress";
 import { RESPECT_REDUCED_MOTION } from "@/lib/motion";
 
 export const metadata: Metadata = {
@@ -47,7 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Intro />
         <Reveal />
         <PageTurn />
-        <ScrollProgress />
         <Cursor />
       </body>
     </html>

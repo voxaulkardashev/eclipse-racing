@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
+import ScrollProgress from "./motion/ScrollProgress";
 import { pages } from "@/lib/site";
 
 export default function Header() {
@@ -51,6 +52,8 @@ export default function Header() {
           {open ? "Close" : "Contents"}
         </button>
       </div>
+
+      <ScrollProgress />
 
       <div id="contents-panel" className={`contents-panel ${open ? "is-open" : ""}`} hidden={!open}>
         {/* The gutter lives on a wrapper: .contents resets padding, which would cancel .container's. */}
