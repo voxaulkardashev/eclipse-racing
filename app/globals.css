@@ -1140,6 +1140,33 @@ a:hover {
   color: var(--ink-2);
 }
 
+/* Contact form status: errors are set in ink on a yellow highlight, confirmations plainly. */
+.form__note--error {
+  justify-self: start;
+  padding: 6px 10px;
+  background: var(--spot);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- Team sign-in (hidden page) ---------- */
+.login {
+  padding-bottom: var(--space-section);
+}
+
+.login__body {
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.login__aside {
+  margin-top: 16px;
+  color: var(--ink-2);
+}
+
+.login-wait {
+  min-height: 60vh;
+}
+
 /* ---------- Back cover ---------- */
 .back-cover {
   margin-top: var(--space-section);
