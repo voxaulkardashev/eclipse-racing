@@ -4,27 +4,23 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 /**
- * A vertical line down the right edge showing how far down the page you are.
- *
- * Like the cursor it is an inverting lens in the logo's yellow (a "darken" copy under a
- * "difference" copy), so it reads on every surface: black over paper, yellow over black, black
- * over yellow. A faint full-height track sits behind the filled part.
+ * Scroll progress: a thin yellow line along the bottom edge of the masthead that fills left to
+ * right as you scroll down the page. Rendered inside the masthead, so it always sits on black.
  */
-const PARTS = ["track darken", "track difference", "fill darken", "fill difference"] as const;
-
 export default function ScrollProgress() {
-  const refs = useRef<(HTMLSpanElement | null)[]>([]);
+  const fill = useRef<HTMLSpanElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
-    const fills = refs.current.filter((el, i) => el && PARTS[i].startsWith("fill")) as HTMLSpanElement[];
+    const el = fill.current;
+    if (!el) return;
     let raf = 0;
 
     const update = () => {
       raf = 0;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-      for (const f of fills) f.style.transform = `scaleY(${p})`;
+      el.style.transform = `scaleX(${p})`;
     };
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(update);
@@ -45,19 +41,9 @@ export default function ScrollProgress() {
     };
   }, [pathname]);
 
-  // Top-level fixed elements, so their blend modes mix with the page (see Cursor).
   return (
-    <>
-      {PARTS.map((part, i) => (
-        <span
-          key={part}
-          ref={(el) => {
-            refs.current[i] = el;
-          }}
-          className={`progress progress--${part.replace(" ", " progress--")}`}
-          aria-hidden="true"
-        />
-      ))}
-    </>
+    <div className="masthead__progress" aria-hidden="true">
+      <span ref={fill} />
+    </div>
   );
 }

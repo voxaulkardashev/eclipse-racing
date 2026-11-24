@@ -129,7 +129,7 @@ Two-colour offset print: one ink, one spot colour, one paper stock.
 
 **The Flip On Yellow Rule.** Anything that is yellow on paper or black (text selection, link hover) turns black on yellow ground. Every yellow surface carries `data-ink="spot"` so styles can tell.
 
-**The Lens Rule.** Fixed overlays that must read on every surface (the cursor, the scroll line) are yellow lenses: a `darken` copy under a `difference` copy, each a top-level fixed element so the blend reaches the page.
+**The Lens Rule.** Fixed overlays that must read on every surface (the cursor) are yellow lenses: a `darken` copy under a `difference` copy, each a top-level fixed element so the blend reaches the page.
 
 **The Logo On Black Rule.** The logo's car is white, so the mark only appears on press-black grounds: masthead, cover, back cover.
 
@@ -209,7 +209,7 @@ An 8-column advert grid in programme sizes: full page (yellow flood), half, quar
 - **Ink roll:** spread and page headings reveal left to right with a clip-path (800ms) when scrolled into view.
 - **Row print:** lists and table bodies fade up 12px row by row, 70ms apart, capped at 8 rows.
 - **Cursor:** an inverting lens in the logo yellow, drawn above everything. Two copies of a yellow disc, the first blended with `darken` and the second with `difference`, compute yellow minus whatever is beneath, per pixel, on any surface: paper and white turn black, black turns yellow, yellow turns black, and text under the cursor stays readable in the opposite colour (black or grey text turns yellow; white text and the logo's white car turn black). A small dot at rest, a larger lens over links, and over marked images a black disc with a yellow label ("View"). Position and size are eased every frame (follow 0.16, grow 0.14), so hovering in, out and between states glides and can be interrupted. Shown whenever a mouse or trackpad is present, touchscreen laptops included.
-- **Scroll progress:** a vertical line down the right edge (3px fill over a faint 1px track, 10px in from the edge, 4px on phones) that fills from the top as you scroll. It uses the same darken + difference lens, so it reads black on paper, yellow on black and black on yellow. Hidden during the loading screen.
+- **Scroll progress:** a 3px spot-yellow line along the bottom edge of the masthead, over a faint track, filling left to right as you scroll down the page. It lives inside the masthead, so it always sits on black.
 - **Scroll:** Lenis smooth scrolling with a long glide (lerp 0.055, wheel multiplier 1.15).
 - **Reduced motion:** every animation plays for everyone, including devices set to reduce motion (team request). One switch, `RESPECT_REDUCED_MOTION` in `lib/motion.ts`, turns the setting back on site-wide: Lenis and the page-turn off, the loading sheet fading instead of wiping, reveals skipped and CSS transitions stilled (the cursor keeps easing either way).
 - **Scrollbars:** hidden site-wide (`scrollbar-width: none`, `::-webkit-scrollbar`); scrolling works by wheel, touch and keys.

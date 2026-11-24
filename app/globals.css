@@ -176,6 +176,25 @@ a:hover {
   color: var(--cover-text);
 }
 
+/* Scroll progress: a yellow line along the masthead's bottom edge, filling left to right. */
+.masthead__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(237, 237, 232, 0.12);
+  pointer-events: none;
+}
+
+.masthead__progress span {
+  display: block;
+  height: 100%;
+  background: var(--spot);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
 .masthead__inner {
   display: flex;
   align-items: center;
@@ -1286,53 +1305,6 @@ main > :last-child.band {
   transition:
     opacity 260ms var(--ease) 90ms,
     transform 420ms var(--ease) 60ms;
-}
-
-/* Scroll progress: a vertical line down the right edge, the same inverting lens as the cursor,
-   so it reads on paper (black), on black (yellow) and on yellow (black). */
-.progress {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 10px;
-  z-index: 2147483000; /* above the page and masthead, below the cursor */
-  pointer-events: none;
-  background-color: var(--spot);
-  transform-origin: top center;
-  transition: opacity 400ms var(--ease);
-}
-
-.progress--darken {
-  mix-blend-mode: darken;
-}
-
-.progress--difference {
-  mix-blend-mode: difference;
-}
-
-.progress--track {
-  width: 1px;
-  right: 11px;
-  opacity: 0.28;
-}
-
-.progress--fill {
-  width: 3px;
-  transform: scaleY(0);
-}
-
-.intro .progress {
-  opacity: 0;
-}
-
-@media (max-width: 560px) {
-  .progress {
-    right: 4px;
-  }
-
-  .progress--track {
-    right: 5px;
-  }
 }
 
 /* First-visit loading screen: the logo is drawn, then the sheet wipes up */
