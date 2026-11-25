@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import { Photo, Ph } from "@/components/Placeholder";
+import { Photo, Ph, Val } from "@/components/Placeholder";
 import { Roundel, SocialLinks, SpreadHead } from "@/components/Print";
-import { adTiers, nextRound, pages, posts, rounds, site, team } from "@/lib/site";
+import { adTiers, car, nextRound, pages, posts, rounds, site, team, teamIntro } from "@/lib/site";
 
 export default function CoverPage() {
   return (
@@ -30,26 +30,20 @@ export default function CoverPage() {
                 </span>
               </h1>
               <p className="cover__sub">
-                {site.competition}. <Ph>{site.base}</Ph>
+                {site.competition}. {site.base}
               </p>
             </div>
 
             <div className="cover__side">
               <div className="next-round" data-ink="spot">
-                <h2 className="display">Next round</h2>
+                <h2 className="display">{nextRound.heading}</h2>
                 <dl>
                   <dt>Event</dt>
-                  <dd>
-                    <Ph>{nextRound.event}</Ph>
-                  </dd>
+                  <dd>{nextRound.event}</dd>
                   <dt>Date</dt>
-                  <dd>
-                    <Ph>{nextRound.date}</Ph>
-                  </dd>
-                  <dt>Venue</dt>
-                  <dd>
-                    <Ph>{nextRound.venue}</Ph>
-                  </dd>
+                  <dd>{nextRound.date}</dd>
+                  <dt>Location</dt>
+                  <dd>{nextRound.location}</dd>
                 </dl>
                 <Link href="/news/" className="button">
                   Latest results
@@ -93,10 +87,8 @@ export default function CoverPage() {
               {team.map((m) => (
                 <li className="entry" key={m.no}>
                   <Roundel no={m.no} />
-                  <Photo caption={`Portrait, ${m.role}`} ratio="1 / 1" />
-                  <span className="entry__name">
-                    <Ph>[Name]</Ph>
-                  </span>
+                  <Photo caption={`Portrait, ${m.name}`} ratio="1 / 1" />
+                  <span className="entry__name">{m.name}</span>
                   <span className="entry__role">{m.role}</span>
                 </li>
               ))}
@@ -104,7 +96,7 @@ export default function CoverPage() {
           </div>
           <div className="span-4">
             <p className="lede">
-              <Ph>[Who the team is in two or three sentences: school, year group, how you came together, what you are aiming for this season.]</Ph>
+              {teamIntro}
             </p>
             <Photo caption="The whole team together" ratio="4 / 5" />
           </div>
@@ -118,12 +110,12 @@ export default function CoverPage() {
         <div className="cols" style={{ marginTop: 32 }}>
           <div className="span-5">
             <h3 className="display" style={{ fontSize: "2.5rem" }}>
-              <Ph>[Car name]</Ph>
+              {car.name}
             </h3>
           </div>
           <div className="span-7">
             <p className="lede">
-              <Ph>[The design idea behind the car in one or two sentences.]</Ph>
+              {car.tagline}
             </p>
           </div>
         </div>
@@ -148,13 +140,13 @@ export default function CoverPage() {
                   <tr key={r.round}>
                     <td className="num">{r.round}</td>
                     <th scope="row">
-                      <Ph>{r.event}</Ph>
+                      <Val>{r.event}</Val>
                     </th>
                     <td>
-                      <Ph>{r.venue}</Ph>
+                      <Val>{r.venue}</Val>
                     </td>
                     <td>
-                      <Ph>{r.date}</Ph>
+                      <Val>{r.date}</Val>
                     </td>
                   </tr>
                 ))}

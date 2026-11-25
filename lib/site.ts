@@ -4,7 +4,7 @@ export const site = {
   name: "Eclipse Racing",
   competition: "STEM Racing, Professional Class",
   season: "[2026/27]",
-  base: "[School, Town]",
+  base: "Boroughmuir High School, Edinburgh",
   email: "[team email]@eclipseracing.co.uk",
   sponsorEmail: "[sponsors]@eclipseracing.co.uk",
   socials: [
@@ -33,24 +33,34 @@ export function pageFor(href: string): PageInfo | undefined {
   return pages.find((p) => p.href === clean);
 }
 
-// Typical Professional Class roles. Race numbers are just the programme's running order.
+// The team. Race numbers are just the programme's running order.
 export const team = [
-  { no: "01", role: "Team Manager" },
-  { no: "02", role: "Design Engineer" },
-  { no: "03", role: "Manufacturing Engineer" },
-  { no: "04", role: "Graphic Designer" },
-  { no: "05", role: "Enterprise Manager" },
-  { no: "06", role: "Resources Manager" },
+  { no: "01", name: "Andrej Nikolic", role: "Team Leader and Enterprise Manager" },
+  { no: "02", name: "Dannier Sabir", role: "Head Engineer" },
+  { no: "03", name: "Liam Lai", role: "Marketing Head" },
+  { no: "04", name: "Sathvik Burle", role: "Graphics Designer and Engineer" },
+  { no: "05", name: "Nathan Hsu", role: "Graphics Head" },
 ];
 
-// STEM Racing seasons run regional, then national, then (if qualified) World Finals.
+export const teamIntro =
+  "We are a group of 5 S4 students in the Eclipse STEM Racing team based in Boroughmuir High School, Edinburgh. Having won the Sponsorship and Marketing Award in the Scottish Regional Finals in Linlithgow, we seek to make a comeback next year.";
+
+export const car = { name: "Corona", tagline: "The halo of light around the dark" };
+
+// The season's rounds. Bracketed values are placeholders still to be confirmed.
 export const rounds = [
-  { round: "1", event: "[Regional final]", venue: "[Venue]", date: "[DD.MM.YYYY]", result: "[Result]" },
-  { round: "2", event: "[National final]", venue: "[Venue]", date: "[DD.MM.YYYY]", result: "[Result]" },
-  { round: "3", event: "[World Finals, if qualified]", venue: "[Venue]", date: "[DD.MM.YYYY]", result: "[Result]" },
+  { round: "1", event: "Scottish Regional Finals", venue: "[TBC]", date: "[TBC]", result: "[TBC]" },
+  { round: "2", event: "—", venue: "—", date: "—", result: "—" },
+  { round: "3", event: "—", venue: "—", date: "—", result: "—" },
 ];
 
-export const nextRound = rounds[0];
+// The cover's yellow panel.
+export const nextRound = {
+  heading: "We'll be back next year!",
+  event: "TBC",
+  date: "TBC",
+  location: "TBC",
+};
 
 // Placeholder bulletins until real posts exist.
 export const posts = [1, 2, 3, 4, 5, 6].map((n) => ({

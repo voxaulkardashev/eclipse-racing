@@ -32,7 +32,7 @@ export default function ContactPage() {
               <tr>
                 <th scope="row">Based at</th>
                 <td>
-                  <Ph>{site.base}</Ph>
+                  {site.base}
                 </td>
               </tr>
               <tr>

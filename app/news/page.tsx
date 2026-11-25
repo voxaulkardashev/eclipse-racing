@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Photo, Ph } from "@/components/Placeholder";
+import { Photo, Ph, Val } from "@/components/Placeholder";
 import { PageHead, SpreadHead } from "@/components/Print";
 import { posts, rounds } from "@/lib/site";
 
@@ -30,16 +30,16 @@ export default function NewsPage() {
                 <tr key={r.round}>
                   <td className="num">{r.round}</td>
                   <th scope="row">
-                    <Ph>{r.event}</Ph>
+                    <Val>{r.event}</Val>
                   </th>
                   <td>
-                    <Ph>{r.venue}</Ph>
+                    <Val>{r.venue}</Val>
                   </td>
                   <td>
-                    <Ph>{r.date}</Ph>
+                    <Val>{r.date}</Val>
                   </td>
                   <td>
-                    <Ph>{r.result}</Ph>
+                    <Val>{r.result}</Val>
                   </td>
                 </tr>
               ))}

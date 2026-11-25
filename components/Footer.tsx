@@ -39,7 +39,7 @@ export default function Footer() {
 
       <div className="container back-cover__imprint">
         <span>
-          Published by Eclipse Racing, <Ph>{site.base}</Ph>. {site.competition}. Season <Ph>{site.season}</Ph>.
+          Published by Eclipse Racing, {site.base}. {site.competition}. Season <Ph>{site.season}</Ph>.
         </span>
         <span>© {new Date().getFullYear()} Eclipse Racing</span>
       </div>

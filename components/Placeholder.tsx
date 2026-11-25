@@ -19,6 +19,11 @@ export function Photo({ caption, ratio = "4 / 3", cursor, className = "" }: Phot
   );
 }
 
+/** A value that may still be a placeholder: bracketed text like "[TBC]" shows as <Ph>, anything else plainly. */
+export function Val({ children }: { children: string }) {
+  return children.startsWith("[") ? <Ph>{children}</Ph> : <>{children}</>;
+}
+
 /** Copy still to be written, shown in brackets, e.g. <Ph>[Car name]</Ph>. */
 export function Ph({ children }: { children: React.ReactNode }) {
   return <span className="ph">{children}</span>;
