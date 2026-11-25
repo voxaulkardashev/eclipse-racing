@@ -47,6 +47,9 @@ export const teamIntro =
 
 export const car = { name: "Corona", tagline: "The halo of light around the dark" };
 
+// Awards won, newest first. Shown on the Team page.
+export const awards = [{ title: "Sponsorship and Marketing Award", event: "2026 Scottish Regional Finals, All Classes" }];
+
 // The season's rounds. Bracketed values are placeholders still to be confirmed.
 export const rounds = [
   { round: "1", event: "Scottish Regional Finals", venue: "[TBC]", date: "[TBC]", result: "[TBC]" },
