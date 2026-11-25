@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Photo, Ph } from "@/components/Placeholder";
 import { PageHead, Roundel, SpreadHead } from "@/components/Print";
+import { car } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Car" };
 
@@ -29,8 +30,8 @@ const notes = [
 export default function CarPage() {
   return (
     <>
-      <PageHead href="/car/" title={<Ph>[Car name]</Ph>}>
-        <Ph>[One sentence on the car and the idea behind its design.]</Ph>
+      <PageHead href="/car/" title={car.name}>
+        {car.tagline}
       </PageHead>
 
       <section className="container" aria-label="Car profile">

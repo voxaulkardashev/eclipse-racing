@@ -19,11 +19,9 @@ export default function TeamPage() {
           {team.map((m) => (
             <li className="entry-card" key={m.no}>
               <Roundel no={m.no} size="lg" />
-              <Photo caption={`Portrait, ${m.role}`} ratio="4 / 5" />
+              <Photo caption={`Portrait, ${m.name}`} ratio="4 / 5" />
               <div className="entry-card__body">
-                <h2 className="entry-card__name">
-                  <Ph>[Name]</Ph>
-                </h2>
+                <h2 className="entry-card__name">{m.name}</h2>
                 <p className="entry-card__role">{m.role}</p>
                 <p className="prose">
                   <Ph>[Two sentences: what this person does on the team and what they enjoy about it.]</Ph>
