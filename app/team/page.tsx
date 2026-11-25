@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Photo, Ph } from "@/components/Placeholder";
 import { PageHead, Roundel, SpreadHead } from "@/components/Print";
-import { team } from "@/lib/site";
+import { awards, team } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Team" };
 
@@ -30,6 +30,18 @@ export default function TeamPage() {
             </li>
           ))}
         </ol>
+      </section>
+
+      <section className="spread container" aria-labelledby="h-awards">
+        <SpreadHead id="h-awards" title="Awards" />
+        <ul className="awards" data-reveal="rows">
+          {awards.map((a) => (
+            <li className="award" data-ink="spot" key={`${a.title}-${a.event}`}>
+              <h3 className="display award__title">{a.title}</h3>
+              <p className="award__event">{a.event}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="spread container" aria-labelledby="h-work">
